@@ -16,3 +16,22 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.owl-container {
+    width: 350px;
+    padding-top: 10px;
+    background-color: #EDE7E3;
+}
+
+.owl-desc {
+    text-align: center;
+    padding: 2px 0px 2px 0px;
+    background-color: #82C0CC;
+}
+
+.icon-darkteal {
+    height: 70px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    filter: invert(34%) sepia(10%) saturate(5505%) hue-rotate(151deg) brightness(84%) contrast(83%);
+}
