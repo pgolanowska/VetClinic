@@ -136,7 +136,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="waves-effect waves-dark" href="pages-profile.html" aria-expanded="false">
+                            <a class="waves-effect waves-dark" aria-expanded="false" asp-controller="Employees" asp-action="Index">
                                 <i class="mdi mdi-account-check"></i><span class="hide-menu">Staff</span>
                             </a>
                         </li>
@@ -179,6 +179,7 @@
                 <!-- End Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 @RenderBody()
+                @await RenderSectionAsync("Scripts", required: false)
                 <!-- ============================================================== -->
                 <!-- End Page Content -->
                 <!-- ============================================================== -->

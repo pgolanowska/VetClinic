@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using VetClinic.Intranet.Data;
-using VetClinic.Intranet.Models.Staff;
+using VetClinic.Data.Data;
+using VetClinic.Data.Data.Staff;
 
 namespace VetClinic.Intranet.Controllers
 {

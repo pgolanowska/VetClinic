@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace VetClinic.Intranet.Models.Staff
+namespace VetClinic.Data.Data.Staff
 {
     public class Title
     {

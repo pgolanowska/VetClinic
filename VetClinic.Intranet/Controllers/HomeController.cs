@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using VetClinic.Data.Data;
 using VetClinic.Intranet.Models;
 
 namespace VetClinic.Intranet.Controllers

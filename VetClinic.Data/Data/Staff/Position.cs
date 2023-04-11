@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Net;
-using VetClinic.Intranet.Models.Clinic;
+using VetClinic.Data.Data.Clinic;
 
-namespace VetClinic.Intranet.Models.Staff
+namespace VetClinic.Data.Data.Staff
 {
     public class Position
     {

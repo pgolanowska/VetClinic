@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
-namespace VetClinic.Intranet.Models.Staff
+namespace VetClinic.Data.Data.Staff
 {
     public class Employee
     {
@@ -21,9 +21,11 @@ namespace VetClinic.Intranet.Models.Staff
         public string EmployeeSurname { get; set; }
 
         public int EmployeeTitle { get; set; }
+        [Display(Name = "Employee's Title")]
         public Title Title { get; set; }
 
         public int EmployeePosition { get; set; }
+        [Display(Name = "Employee's Position")]
         public Position Position { get; set; }
 
         [MaxLength(100, ErrorMessage = "Education info cannot exceed 100 chars")]

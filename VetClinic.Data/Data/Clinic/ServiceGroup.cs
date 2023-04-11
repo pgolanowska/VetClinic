@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using VetClinic.Intranet.Models.Staff;
+using VetClinic.Data.Data.Staff;
 
-namespace VetClinic.Intranet.Models.Clinic
+namespace VetClinic.Data.Data.Clinic
 {
     public class ServiceGroup
     {
