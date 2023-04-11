@@ -1,8 +1,11 @@
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using VetClinic.Intranet.Data;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<VetClinicContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("VetClinicContext") ?? throw new InvalidOperationException("Connection string 'VetClinicContext' not found.")));
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
