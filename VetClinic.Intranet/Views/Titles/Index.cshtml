@@ -4,38 +4,43 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h3>Staff > Titles > Index</h3>
+<hr/>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.TitleName)
+                @Html.DisplayNameFor(model => model.TitleAbbrev)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TitleIsActive)
+                @Html.DisplayNameFor(model => model.TitleName)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TitleName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TitleIsActive)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.TitleId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.TitleId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.TitleId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            if (item.TitleIsActive == true)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TitleAbbrev)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TitleName)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.TitleId" class="btn btn-primary">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.TitleId" class="btn btn-primary">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.TitleId" class="btn btn-primary">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
     </tbody>
 </table>
+<div class="form-group">
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <a href="javascript:window.history.back();" class="btn btn-primary">Back</a>
+</div>

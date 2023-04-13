@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
+using System.Reflection.Metadata;
 
 namespace VetClinic.Data.Data.CMS
 {
@@ -32,5 +33,12 @@ namespace VetClinic.Data.Data.CMS
 
         [Column(TypeName = "bit")]
         public bool NewsIsNotArchived { get; set; }
+
+        public News()
+        {
+            this.AddedDate = DateTime.Now;
+            this.AddedBy = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+            this.NewsIsNotArchived = true;
+        }
     }
 }

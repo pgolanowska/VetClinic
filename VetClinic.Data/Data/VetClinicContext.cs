@@ -17,11 +17,11 @@ namespace VetClinic.Data.Data
         {
         }
         public DbSet<News> News { get; set; }
-
-        public DbSet<Employee>? Employee { get; set; }
-        public DbSet<Position>? Position { get; set; }
-        public DbSet<Title>? Title { get; set; }
-        public DbSet<ServiceGroup>? ServiceGroup { get; set; }
+        public DbSet<Page> Page { get; set; }
+        public DbSet<Employee> Employee { get; set; }
+        public DbSet<Position> Position { get; set; }
+        public DbSet<Title> Title { get; set; }
+        public DbSet<ServiceGroup> ServiceGroup { get; set; }
 
     }
 }

@@ -4,9 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>ServiceGroup</h4>
+<h3>Clinic > Services > Create</h3>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -23,19 +21,15 @@
                 <span asp-validation-for="ServiceGroupDesc" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="ServiceGroupIsActive" /> @Html.DisplayNameFor(model => model.ServiceGroupIsActive)
-                </label>
+                @Html.CheckBoxFor(model => model.ServiceGroupIsActive, htmlAttributes: new { @checked = true} )
+                @Html.LabelFor(model => model.ServiceGroupIsActive, "Is Active")
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-primary">Back to List</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

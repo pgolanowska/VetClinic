@@ -1,4 +1,9 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿var toggler = document.getElementsByClassName("sidebar-expandable");
+var i;
 
-// Write your JavaScript code.
+for (i = 0; i < toggler.length; i++) {
+    toggler[i].addEventListener("click", function () {
+        this.parentElement.querySelector(".sidebar-nested").classList.toggle("active");
+        this.classList.toggle("sidebar-expanded");
+    });
+}

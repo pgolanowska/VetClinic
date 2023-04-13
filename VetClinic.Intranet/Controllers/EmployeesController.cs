@@ -56,7 +56,7 @@ namespace VetClinic.Intranet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmployeeId,EmployeeName,EmployeeSurname,EmployeeTitle,EmployeePosition,EmployeeEducation,EmployeeBio,EmployeePhotoURL,EmployeeIsActive")] Employee employee)
+        public async Task<IActionResult> Create([Bind("EmployeeId,EmployeeName,EmployeeSurname,EmployeeTitleId,EmployeePositionId,EmployeeEducation,EmployeeBio,EmployeePhotoURL,EmployeeIsActive")] Employee employee)
         {
             if (ModelState.IsValid)
             {

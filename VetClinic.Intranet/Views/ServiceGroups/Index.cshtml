@@ -4,11 +4,8 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h3>Clinic > Services > Index</h3>
+<hr />
 <table class="table">
     <thead>
         <tr>
@@ -18,14 +15,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.ServiceGroupDesc)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ServiceGroupIsActive)
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.ServiceGroupName)
@@ -34,14 +28,15 @@
                 @Html.DisplayFor(modelItem => item.ServiceGroupDesc)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ServiceGroupIsActive)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ServiceGroupId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ServiceGroupId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ServiceGroupId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ServiceGroupId" class="btn btn-primary">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ServiceGroupId" class="btn btn-primary">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ServiceGroupId" class="btn btn-primary">Delete</a>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>
+<div class="form-group">
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <a href="javascript:window.history.back();" class="btn btn-primary">Back</a>
+</div>

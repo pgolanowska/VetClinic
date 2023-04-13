@@ -1,18 +1,39 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+.sidebar-expandable {
+    cursor: pointer;
+    user-select: none;
+}
+
+.sidebar-expandable::before {
+
+}
+
+.sidebar-expanded::before {
+    transform: rotate(90deg);
+}
+
+.sidebar-nested {
+    display: none;
+}
+
+.active {
+    display: block;
 }

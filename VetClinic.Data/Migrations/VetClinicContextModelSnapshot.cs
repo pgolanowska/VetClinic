@@ -99,6 +99,43 @@ namespace VetClinic.Data.Migrations
                     b.ToTable("News");
                 });
 
+            modelBuilder.Entity("VetClinic.Data.Data.CMS.Page", b =>
+                {
+                    b.Property<int>("PageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PageId"), 1L, 1);
+
+                    b.Property<string>("AddedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(MAX)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LinkTitle")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("PageTitle")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("PageId");
+
+                    b.ToTable("Page");
+                });
+
             modelBuilder.Entity("VetClinic.Data.Data.Staff.Employee", b =>
                 {
                     b.Property<int>("EmployeeId")
@@ -128,7 +165,7 @@ namespace VetClinic.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EmployeePosition")
+                    b.Property<int>("EmployeePositionId")
                         .HasColumnType("int");
 
                     b.Property<string>("EmployeeSurname")
@@ -136,7 +173,7 @@ namespace VetClinic.Data.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<int>("EmployeeTitle")
+                    b.Property<int>("EmployeeTitleId")
                         .HasColumnType("int");
 
                     b.Property<int>("PositionId")
@@ -183,13 +220,18 @@ namespace VetClinic.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TitleId"), 1L, 1);
 
+                    b.Property<string>("TitleAbbrev")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
                     b.Property<bool>("TitleIsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("TitleName")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.HasKey("TitleId");
 
@@ -214,13 +256,13 @@ namespace VetClinic.Data.Migrations
             modelBuilder.Entity("VetClinic.Data.Data.Staff.Employee", b =>
                 {
                     b.HasOne("VetClinic.Data.Data.Staff.Position", "Position")
-                        .WithMany("Employees")
+                        .WithMany("Employee")
                         .HasForeignKey("PositionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("VetClinic.Data.Data.Staff.Title", "Title")
-                        .WithMany("Employees")
+                        .WithMany("Employee")
                         .HasForeignKey("TitleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -232,12 +274,12 @@ namespace VetClinic.Data.Migrations
 
             modelBuilder.Entity("VetClinic.Data.Data.Staff.Position", b =>
                 {
-                    b.Navigation("Employees");
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("VetClinic.Data.Data.Staff.Title", b =>
                 {
-                    b.Navigation("Employees");
+                    b.Navigation("Employee");
                 });
 #pragma warning restore 612, 618
         }

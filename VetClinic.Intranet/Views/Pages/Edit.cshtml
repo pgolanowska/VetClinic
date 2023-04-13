@@ -1,0 +1,53 @@
+﻿@model VetClinic.Data.Data.CMS.Page
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h3>Pages > Edit</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="PageId" />
+            <div class="form-group">
+                <label asp-for="LinkTitle" class="control-label"></label>
+                <input asp-for="LinkTitle" class="form-control" />
+                <span asp-validation-for="LinkTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PageTitle" class="control-label"></label>
+                <input asp-for="PageTitle" class="form-control" />
+                <span asp-validation-for="PageTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Content" class="control-label"></label>
+                <input asp-for="Content" class="form-control" />
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddedDate" class="control-label"></label>
+                <input asp-for="AddedDate" class="form-control" />
+                <span asp-validation-for="AddedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddedBy" class="control-label"></label>
+                <input asp-for="AddedBy" class="form-control" />
+                <span asp-validation-for="AddedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                @Html.CheckBoxFor(model => model.IsActive)
+                @Html.LabelFor(model => model.IsActive, "Is Active")
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-primary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

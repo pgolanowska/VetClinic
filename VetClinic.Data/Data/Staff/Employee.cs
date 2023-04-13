@@ -20,12 +20,12 @@ namespace VetClinic.Data.Data.Staff
         [Display(Name = "Employee's Surname")]
         public string EmployeeSurname { get; set; }
 
-        public int EmployeeTitle { get; set; }
         [Display(Name = "Employee's Title")]
+        public int EmployeeTitleId { get; set; }
         public Title Title { get; set; }
 
-        public int EmployeePosition { get; set; }
         [Display(Name = "Employee's Position")]
+        public int EmployeePositionId { get; set; }
         public Position Position { get; set; }
 
         [MaxLength(100, ErrorMessage = "Education info cannot exceed 100 chars")]
@@ -36,6 +36,7 @@ namespace VetClinic.Data.Data.Staff
         [Column(TypeName = "nvarchar(max)")]
         public string EmployeeBio { get; set; }
 
+        [Display(Name = "Employee's Photo URL")]
         public string EmployeePhotoURL { get; set; }
 
         [Column(TypeName = "bit")]

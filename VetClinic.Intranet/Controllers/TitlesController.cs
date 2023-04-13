@@ -56,7 +56,7 @@ namespace VetClinic.Intranet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TitleId,TitleName,TitleIsActive")] Title title)
+        public async Task<IActionResult> Create([Bind("TitleId,TitleAbbrev,TitleName,TitleIsActive")] Title title)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace VetClinic.Intranet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TitleId,TitleName,TitleIsActive")] Title title)
+        public async Task<IActionResult> Edit(int id, [Bind("TitleId,TitleAbbrev,TitleName,TitleIsActive")] Title title)
         {
             if (id != title.TitleId)
             {

@@ -8,13 +8,23 @@ namespace VetClinic.Data.Data.Staff
         [Key]
         public int TitleId { get; set; }
 
+        [Required(ErrorMessage = "Abbreviation is required")]
+        [MaxLength(10, ErrorMessage = "Abbreviation cannot exceed 10 chars")]
+        [Display(Name = "Title Abbreviation")]
+        public string TitleAbbrev { get; set; }
+
         [Required(ErrorMessage = "Title name is required")]
-        [MaxLength(20, ErrorMessage = "Title name cannot exceed 20 chars")]
+        [MaxLength(40, ErrorMessage = "Title name cannot exceed 40 chars")]
         [Display(Name = "Title Name")]
         public string TitleName { get; set; }
 
         [Column(TypeName = "bit")]
         public bool TitleIsActive { get; set; }
-        public List<Employee> Employees { get; set; }
+        public List<Employee> Employee { get; set; }
+
+        public Title()
+        {
+            this.Employee = new List<Employee>();
+        }
     }
 }

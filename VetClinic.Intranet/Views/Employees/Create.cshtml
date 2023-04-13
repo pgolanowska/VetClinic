@@ -1,12 +1,11 @@
-﻿@model VetClinic.Data.Data.Staff.Employee
+﻿@using VetClinic.Data.Data;
+@model VetClinic.Data.Data.Staff.Employee
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>Employee</h4>
+<h3>Staff > Employees > Create</h3>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -23,14 +22,14 @@
                 <span asp-validation-for="EmployeeSurname" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EmployeeTitle" class="control-label"></label>
-                <input asp-for="EmployeeTitle" class="form-control" />
-                <span asp-validation-for="EmployeeTitle" class="text-danger"></span>
+                <label asp-for="EmployeeTitleId" class="control-label"></label>
+                <input asp-for="EmployeeTitleId" class="form-control" />
+                <span asp-validation-for="EmployeeTitleId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EmployeePosition" class="control-label"></label>
-                <input asp-for="EmployeePosition" class="form-control" />
-                <span asp-validation-for="EmployeePosition" class="text-danger"></span>
+                <label asp-for="EmployeePositionId" class="control-label"></label>
+                <input asp-for="EmployeePositionId" class="form-control" />
+                <span asp-validation-for="EmployeePositionId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="EmployeeEducation" class="control-label"></label>
@@ -47,20 +46,16 @@
                 <input asp-for="EmployeePhotoURL" class="form-control" />
                 <span asp-validation-for="EmployeePhotoURL" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="EmployeeIsActive" /> @Html.DisplayNameFor(model => model.EmployeeIsActive)
-                </label>
+            <div class="form-group"> 
+                @Html.CheckBoxFor(model => model.EmployeeIsActive, htmlAttributes: new { @checked = true} )
+                @Html.LabelFor(model => model.EmployeeIsActive, "Is Active")
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-primary">Back to List</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

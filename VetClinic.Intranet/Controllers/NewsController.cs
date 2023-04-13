@@ -48,7 +48,8 @@ namespace VetClinic.Intranet.Controllers
         // GET: News/Create
         public IActionResult Create()
         {
-            return View();
+            News news = new News();
+            return View(news);
         }
 
         // POST: News/Create
