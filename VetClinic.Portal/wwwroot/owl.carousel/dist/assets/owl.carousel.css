@@ -13,12 +13,14 @@
   /* position relative and z-index fix webkit rendering fonts issue */
   position: relative;
   z-index: 1; }
-  .owl-carousel .owl-stage {
-    position: relative;
-    -ms-touch-action: pan-Y;
-    touch-action: manipulation;
-    -moz-backface-visibility: hidden;
-    /* fix firefox animation glitch */ }
+    .owl-carousel .owl-stage {
+        position: relative;
+        background: #EDE7E3;
+        -ms-touch-action: pan-Y;
+        touch-action: manipulation;
+        -moz-backface-visibility: hidden;
+        /* fix firefox animation glitch */
+    }
   .owl-carousel .owl-stage:after {
     content: ".";
     display: block;

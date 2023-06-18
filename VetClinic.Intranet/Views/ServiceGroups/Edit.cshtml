@@ -18,8 +18,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="ServiceGroupDesc" class="control-label"></label>
-                <input asp-for="ServiceGroupDesc" class="form-control" />
+                <textarea asp-for="ServiceGroupDesc" class="form-control"></textarea>
                 <span asp-validation-for="ServiceGroupDesc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceGroupIconName" class="control-label"></label>
+                <input asp-for="ServiceGroupIconName" class="form-control" />
+                <span asp-validation-for="ServiceGroupIconName" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 @Html.CheckBoxFor(model => model.ServiceGroupIsActive)

@@ -1,0 +1,72 @@
+﻿@model IEnumerable<VetClinic.Data.Data.Clinic.Appointment>
+<div class="dashboard-widget">
+    <h3>Today's Appointments</h3>
+    <table class="dashboard-widget-table">
+        <thead>
+            <tr>
+                <th style="width: 20%">Doctor</th>
+                <th style="width: 20%">Owner</th>
+                <th style="width: 15%">Pet</th>
+                <th style="width: 20%">Time</th>
+                <th style="width: 12%"></th>
+                <th style="width: 12%"></th>
+                <th style="width: 12%"></th>
+                <th style="width: 12%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var appointment in Model)
+            {
+                <tr>
+                    <td>@appointment.Employee.EmployeeName @appointment.Employee.EmployeeSurname</td>
+                    <td>@appointment.OwnerName</td>
+                    <td>@appointment.PetName</td>
+                    <td>@appointment.AppointmentDateTime.ToShortTimeString()</td>
+                    <td class="table-button-td" style="text-align: right">
+                        <a asp-action="Details" asp-controller="Appointments" asp-route-id="@appointment.AppointmentId" class="btn btn-secondary">
+                            Details
+                        </a>
+                    </td>
+                    <td class="table-button-td">
+                        @if(appointment.IsConfirmed)
+                        {
+                            <input type="submit" class="btn btn-primary" value="Confirmed" disabled/>
+                        }
+                        else
+                        {
+                            <a asp-action="ConfirmAppointment" asp-controller="Appointments" asp-route-id="@appointment.AppointmentId" class="btn btn-primary">
+                                Confirm
+                            </a>
+                        }
+                    </td>
+                    <td class="table-button-td">
+                        @if(appointment.HasArrived)
+                        {
+                            <input type="submit" class="btn btn-primary" value="Arrived" disabled/>
+                        }
+                        else
+                        {
+                            <a asp-action="ConfirmArrival" asp-controller="Appointments" asp-route-id="@appointment.AppointmentId" class="btn btn-primary">
+                                Arrival
+                            </a>
+                        }
+                    </td>
+
+                    <td class="table-button-td">
+                        @if (appointment.IsCompleted)
+                        {
+                            <input type="submit" class="btn btn-danger" value="Completed" disabled />
+                        }
+                        else
+                        {
+                            <a asp-action="MarkComplete" asp-controller="Appointments" asp-route-id="@appointment.AppointmentId" class="btn btn-danger">
+                                Complete
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

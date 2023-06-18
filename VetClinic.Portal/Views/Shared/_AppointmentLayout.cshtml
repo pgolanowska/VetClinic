@@ -1,0 +1,125 @@
+﻿@{
+    ViewData["Title"] = "Book an Appointment";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>@ViewData["Title"]</title>
+
+    <!-- CSS -->
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="~/lib/materialize/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="~/icons/material-design-iconic-font/css/materialdesignicons.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="~/css/site.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="~/css/gallery-bootstrap.css" type="text/css" rel="stylesheet" media="screen,projection" />
+
+@*    <link rel="stylesheet" href="~/owl.carousel/dist/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" href="~/owl.carousel/dist/assets/owl.theme.default.css" />*@
+
+    <!-- JS -->
+ @*   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>*@
+   @* <script src="~/lib/materialize/js/materialize.js"></script>
+    <script src="~/js/init.js"></script>*@
+
+  @*  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>*@
+  @*  <script src="~/jquery/dist/jquery.js"></script>*@
+   @* <script src="~/owl.carousel/dist/owl.carousel.min.js"></script>*@
+  @*  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>*@
+@*    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>*@
+
+   @* <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">*@
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+</head>
+
+<body>
+    <nav class="white" role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="@Url.Action("Index","Home")" class="brand-logo">
+                <img src="~/img/logo.png" height="50 px" style="margin-top: 10px; margin-bottom: 0px" />
+                <img src="~/img/text-logo.jpg" height="40 px" style="margin-top: 5px; margin-bottom: 5px" />
+            </a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="@Url.Action("AboutUs","Home")">About Us</a></li>
+                <li><a href="@Url.Action("OurStaff","Home")">Our Staff</a></li>
+                <li><a href="@Url.Action("Services","Home")">Services</a></li>
+                <li><a href="@Url.Action("Index","Appointment")">Appointment</a></li>
+                <li><a href="#">Shop</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+
+            <ul id="nav-mobile" class="sidenav">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Appointment</a></li>
+                <li><a href="#">Shop</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        </div>
+
+    </nav>
+
+    <nav class="teal" role="navigation">
+        <div class="nav-wrapper container">            
+            @await Component.InvokeAsync("ServicesComponent")
+        </div>
+    </nav>
+  
+    <div class="container d-flex flex-row">
+        @*<div class="column-container">
+            <div class="align-content-center lefthand-menu">
+                @await Component.InvokeAsync("StaffComponent")
+            </div>*@
+            <div class="text-column">
+                @RenderBody()
+            </div>
+@*        </div>*@
+
+    </div>
+
+    <footer class="page-footer teal">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">Our Clinic</h5>
+                    <p class="grey-text text-lighten-4">
+                        123 Vet Lane<br />
+                        45678 Default City<br />
+                        Mon-Fri 9-5<br />
+                    </p>
+
+                </div>
+                <div class="col l3 s12">
+                    <h5 class="white-text">Info</h5>
+                    @await Component.InvokeAsync("InfoPageLinksComponent")
+                </div>
+                <div class="col l3 s12">
+                    <h5 class="white-text">Contact</h5>
+                    <ul>
+                        <li><i class="mdi mdi-cellphone" style="color: #EDE7E3"></i> <a class="white-text" href="#!">555-555-123</a></li>
+                        <li><i class="mdi mdi-email" style="color: #EDE7E3"></i> <a class="white-text" href="#!">contact@vetclinic.com</a></li>
+                        <li><i class="mdi mdi-facebook" style="color: #EDE7E3"></i> <a class="white-text" href="#!">vetclinic</a></li>
+                        <li><i class="mdi mdi-instagram" style="color: #EDE7E3"></i> <a class="white-text" href="#!">vetclinic</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                ⓒ 2023 VetClinic
+            </div>
+        </div>
+    </footer>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

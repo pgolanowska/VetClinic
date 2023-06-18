@@ -8,25 +8,37 @@ html {
   }
 }
 
+@font-face {
+    font-family: Avenir;
+    src: url(../fonts/AvenirLTStd-Book.otf);
+}
+
 html {
   position: relative;
   min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 0px;
+    background-color: #EDE7E3;
+    font-family: Avenir;
 }
 
 .owl-container {
-    width: 350px;
     padding-top: 10px;
-    background-color: #EDE7E3;
+    text-align: center;
+    align-content: center;
 }
 
 .owl-desc {
     text-align: center;
     padding: 2px 0px 2px 0px;
-    background-color: #82C0CC;
+}
+
+.owl-icon {
+    width: 100%;
+    text-align: center;
+    align-content: center;
 }
 
 .icon-darkteal {
@@ -34,4 +46,152 @@ body {
     padding-top: 10px;
     padding-bottom: 10px;
     filter: invert(34%) sepia(10%) saturate(5505%) hue-rotate(151deg) brightness(84%) contrast(83%);
+}
+
+.title-container {
+    background: rgba(237, 231, 227, .3);
+    width: 20%;
+    height: 60%;
+    margin-left: 22%;
+    padding: 10px;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+}
+
+.title-text {
+    color: #EDE7E3;
+    font-family: Avenir;
+    font-size: 50px;
+    letter-spacing: -1px;
+    line-height: 0.3em;
+}
+
+.second-line {
+    letter-spacing: 7px;
+}
+
+.third-line {
+    letter-spacing: 10px;
+}
+
+.my-second-container {
+    background: rgba(237, 231, 227, .3);
+    width: 20%;
+    height: 45%;
+    margin-left: 60%;
+    padding: 10px;
+    text-align: center;
+    position: absolute;
+    top: 0;
+}
+
+.btn {
+    display: inline-block;
+    line-height: 1.5;
+    height: 50px;
+    margin-top: 10px;
+    color: #000000;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 2px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn-primary, .btn-primary.disabled {
+    background: #FFA62B;
+    border: 1px solid #FFA62B;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(116,96,238,0.14),0 3px 1px -2px rgba(116,96,238,0.2),0 1px 5px 0 rgba(116,96,238,0.12);
+    box-shadow: 0 2px 2px 0 rgba(116,96,238,0.14),0 3px 1px -2px rgba(116,96,238,0.2),0 1px 5px 0 rgba(116,96,238,0.12);
+    -webkit-transition: 0.2s ease-in;
+    -o-transition: 0.2s ease-in;
+    transition: 0.2s ease-in
+}
+
+    .btn-primary.disabled:hover, .btn-primary:hover {
+        background: #EDE7E3;
+        -webkit-box-shadow: 0 14px 26px -12px rgba(116,96,238,0.42),0 4px 23px 0 rgba(0,0,0,0.12),0 8px 10px -5px rgba(116,96,238,0.2);
+        box-shadow: 0 14px 26px -12px rgba(116,96,238,0.42),0 4px 23px 0 rgba(0,0,0,0.12),0 8px 10px -5px rgba(116,96,238,0.2);
+        border: 1px solid #82C0CC
+    }
+
+    .btn-primary.active, .btn-primary.disabled.active, .btn-primary.disabled:active, .btn-primary.disabled:focus, .btn-primary:active, .btn-primary:focus {
+        background: #EDE7E3;
+        -webkit-box-shadow: 0 14px 26px -12px rgba(116,96,238,0.42),0 4px 23px 0 rgba(0,0,0,0.12),0 8px 10px -5px rgba(116,96,238,0.2);
+        box-shadow: 0 14px 26px -12px rgba(116,96,238,0.42),0 4px 23px 0 rgba(0,0,0,0.12),0 8px 10px -5px rgba(116,96,238,0.2);
+        border-color: transparent
+    }
+
+.column-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 0;
+    padding-left: 10%;
+}
+.text-column {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 0.9;
+}
+
+.lefthand-menu {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 0.15;
+    padding-left: 20px;
+    line-height: 2.5;
+    background: rgba(255, 255, 255, .9);
+}
+
+.schedule-container {
+    padding: 20px;
+    text-align: center;
+    align-content: center;
+}
+
+.date-selector {
+    padding: 30px;
+    text-align: center;
+    align-content: center;
+    font-size: larger;
+}
+
+.selector-button {
+    margin: 15px;
+    padding: 0px 5px 5px 5px;
+    text-align: center;
+    align-content: center;
+}
+
+.appointment-button {
+    margin: 1px;
+    cursor: pointer;
+}
+
+.appointment-button:active {
+    color: teal;
+}
+
+.modal-dialog {
+    height: 70%;
 }

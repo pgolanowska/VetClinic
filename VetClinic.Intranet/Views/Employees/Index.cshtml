@@ -10,7 +10,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.EmployeeTitleId)
+                @Html.DisplayNameFor(model => model.PositionId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EmployeeName)
@@ -19,16 +19,19 @@
                 @Html.DisplayNameFor(model => model.EmployeeSurname)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EmployeePositionId)
+                @Html.DisplayNameFor(model => model.TitleId)
             </th>
             <th>
+                Services
+            </th>
+            <th width="200">
                 @Html.DisplayNameFor(model => model.EmployeeEducation)
             </th>
-            <th>
+            <th width="500">
                 @Html.DisplayNameFor(model => model.EmployeeBio)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EmployeePhotoURL)
+                @Html.DisplayNameFor(model => model.EmployeePhoto)
             </th>
             <th></th>
         </tr>
@@ -38,7 +41,10 @@
         {
             if (item.EmployeeIsActive == true)
             {
-                <tr>
+                <tr style="vertical-align:middle">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Position.PositionName)
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.EmployeeName)
                     </td>
@@ -46,10 +52,14 @@
                         @Html.DisplayFor(modelItem => item.EmployeeSurname)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.EmployeeTitleId)
+                        @Html.DisplayFor(modelItem => item.Title.TitleAbbrev)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.EmployeePositionId)
+                        @foreach (var serviceGroup in item.EmployeeServiceGroups)
+                        {
+                            @(serviceGroup.ServiceGroup.ServiceGroupName ?? "")
+                            <br />
+                        }
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.EmployeeEducation)
@@ -58,7 +68,7 @@
                         @Html.DisplayFor(modelItem => item.EmployeeBio)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.EmployeePhotoURL)
+                        <img src="@Url.Action("GetPhoto", "Employees", new { id = item.EmployeeId })" style="width: 150px; height: 150px;" />
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.EmployeeId" class="btn btn-primary">Edit</a> |

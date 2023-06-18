@@ -1,0 +1,261 @@
+﻿@{
+    Layout = "~/Views/Shared/_AppointmentLayout.cshtml";
+}
+
+<div class="schedule-container">
+
+<div class="date-selector">
+    <button class="selector-button" id="prevWeek" onclick="changeWeek(-1)"> < </button>
+    <span id="week-selector"> </span>
+    <button class="selector-button" id="nextWeek" onclick="changeWeek(1)"> > </button>
+</div>
+
+
+<table class="table" id="schedule-table">
+    <thead>
+        <tr>
+            <th style="text-align: center; align-content: center; width: 8%"> </th>
+            <th style="text-align: left; align-content: center; width: 10%">Doctor</th>
+                @foreach (var day in ViewBag.ClinicSchedule)
+                {
+                    <th style="text-align: center; align-content: center; width: 12%">@day.Comment</th>
+                }
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<br/>
+</div>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="appointmentModal" data-backdrop="false">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content" style="background-color: #f8f9fa;">
+      <div class="modal-header">
+        <h5 class="modal-title">Appointment Info</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="appointmentInfo"></p>
+      </div>
+      <div class="modal-footer">
+        <button id="save-button" type="button" class="btn btn-primary" style="margin: 5px">Book</button>
+        <button type="button" class="btn btn-secondary" style="margin: 5px" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+        let currentDate = new Date();
+        let start;
+        let employeeId;
+        let employeeName;
+        let appointmentDate;
+        let appointmentTime;
+        let name = $('#name').val();
+        let phone = $('#phone').val();
+        let email = $('#email').val();
+        let petname = $('#petname').val();
+        let description = $('#description').val();
+        var bookedAppointments = [];
+
+        function formatDate(date) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Intl.DateTimeFormat('en-UK', options).format(date);
+        }
+
+        function getWeekRange(date) {
+            start = new Date(date);
+            start.setDate(date.getDate() - (date.getDay() + 6) % 7);
+            const end = new Date(start);
+            end.setDate(start.getDate() + 6);
+            return [start, end];
+        }
+
+        function updateWeekRange() {
+            const [start, end] = getWeekRange(currentDate);
+            document.getElementById('week-selector').innerText = `${formatDate(start)} - ${formatDate(end)}`;
+        }
+        
+        function changeWeek(direction) {
+            currentDate.setDate(currentDate.getDate() + direction * 7);
+            updateWeekRange();
+            $(document).trigger('weekChanged');
+       }
+
+        updateWeekRange();
+
+        function loadCurrent()
+        {
+            updateWeekRange();
+        }
+        
+        $(document).on('weekChanged', function ()
+        {
+            const [start, end] = getWeekRange(currentDate);
+
+            const startStr = start.toISOString().split('T')[0];
+            const endForDB = new Date(start);
+            endForDB.setDate(start.getDate() + 7);
+            const endStr = endForDB.toISOString().split('T')[0];
+
+            $.ajax({
+               url: '/Appointment/GetBookedAppointmentsForWeek',
+               type: 'GET',
+               data: { start: startStr, end: endStr },
+               dataType: 'json',
+               success: function (appointments) {
+                        bookedAppointments = appointments;
+                       
+                    $.ajax({
+                            url: '/Appointment/GetSchedulesForWeek',
+                            type: 'GET',
+                            data: { start: startStr, end: endStr },
+                            dataType: 'json',
+                            success: function (schedules)
+                            {
+                        
+                                $("#schedule-table tr:has(td)").remove();
+
+                                schedules.forEach(function (item)
+                                {
+                                    var row = $("<tr />");
+                                    $("#schedule-table").append(row);
+
+                                    row.append($("<td><img id='employee-photo' src='/Home/GetPhoto/" + item.employeeId +"' style='width:80px; height: 80px;'></td>"));
+                                    row.append($("<td data-employee-id='" + item.employeeId + "'>" + item.employeeName + "</td>"));
+
+                                    for (var i = 0; i < 7; i++)
+                                    {
+                                        var dayObject = item.weekSchedule[i.toString()];
+                                        var schedule = dayObject ? Object.values(dayObject).toString().split(",") : "Off";
+                                        if (schedule == "Off")
+                                        {
+                                            row.append($("<td style='text-align: center; align-context: center;'>" + schedule + "</td>"));
+                                        }
+                                        else
+                                        {
+                                            var td = $("<td style='text-align: center; align-context: center;'>");
+
+                                            schedule.forEach(function(interval) {
+
+                                                var appointmentDateTime = new Date(start);
+                                                appointmentDateTime.setDate(appointmentDateTime.getDate() + i);  // start + indeks kolumny
+                                                appointmentDateTime.setHours(parseInt(interval.split(':')[0]), 0, 0, 0);
+                                                var appointmentDateTimeUTC = appointmentDateTime.toISOString().split('.')[0];
+                                                var dateNow = new Date();
+
+                                                var isBooked = bookedAppointments.some(function(appointment) {
+                                                    return appointment.employeeId == item.employeeId && appointmentDateTimeUTC == appointment.appointmentDateTime;                                      
+                                                });
+
+                                                var isInThePast = (appointmentDateTime <= dateNow);
+
+                                                var button = $("<button class='appointment-button' name='appointment-time' data-selected-time='" + interval +"' data-day-index='" + i + "'>" + interval + "</button><br/>");
+
+                                                if (isBooked || isInThePast) {
+                                                    button.attr('disabled', 'disabled');
+                                                }
+
+                                                td.append(button);
+                                            });
+
+                                            td.append("</td>");
+                                            row.append(td);
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                  }
+             });
+        });
+
+        $(document).on('click', '.appointment-button', function () {
+             employeeId = $(this).closest('tr').find('td:nth-child(2)').data("employee-id");
+             employeeName = $(this).closest('tr').find('td:nth-child(2)').text();
+             appointmentTime = $(this).data('selected-time');
+             var dayIndex = $(this).data('day-index');
+
+             appointmentDate = new Date();
+             appointmentDate.setDate(start.getDate() + dayIndex);
+
+             $('#appointmentInfo').html(`Doctor: <b>${employeeName}</b>
+                <br>Date: ${formatDate(appointmentDate)}
+                <br>Time: ${appointmentTime}<br><br>
+                <label for="name">Your Name:</label><br>
+                <input type="text" id="name" name="name"><br>
+                <label for="phone">Your Phone:</label><br>
+                <input type="tel" id="phone" name="phone"><br>
+                <label for="email">Your Email:</label><br>
+                <input type="email" id="email" name="email"><br>
+                <label for="petname">Pet Name:</label><br>
+                <input type="text" id="petname" name="petname"><br>
+                <label for="description">Issue Description:</label><br>
+                <textarea id="description" name="description" style="border: 0px; border-bottom: 1px solid darkgray; height: 100px"></textarea><br>             
+              `);
+              $('#appointmentModal').modal('show');
+        });
+
+        $("#save-button").click(function() {
+            
+            let name = $('#name').val();
+            let phone = $('#phone').val();
+            let email = $('#email').val();
+            let petname = $('#petname').val();
+            let description = $('#description').val();          
+
+            let appointment = {
+                EmployeeId: employeeId,
+                AppointmentDateTime: new Date(appointmentDate.toDateString() + ' ' + appointmentTime),
+                OwnerName: name,
+                OwnerPhoneNumber: phone,
+                OwnerEmail: email,
+                PetName: petname,
+                IssueDescription: description,
+                IsConfirmed: false
+            };
+
+            $.ajax({
+                url: '/Appointment/CreateAppointment',
+                type: 'POST',
+                data: JSON.stringify(appointment),
+                contentType: 'application/json',
+                success: function(response) {
+
+                    $('.modal-title').html(`Appointment Confirmation`);
+
+                    $('#appointmentInfo').html(`Apppointment with <b>${employeeName}</b> 
+                    on <b>${formatDate(appointmentDate)}</b> 
+                    at <b>${appointmentTime}</b> 
+                    for <b>${name}</b> and <b>${petname}</b> successfully saved!<br><br>
+                    We'll send an email to <b>${email}</b> as soon as it's confirmed.<br><br> Thank you!`);
+
+                    $('.modal-footer').html(`<button type="button" class="btn btn-secondary btn-small" style="margin: 5px" data-dismiss="modal">Close</button>`);
+
+                    setTimeout(function() {
+                        $('#appointmentModal').modal('hide');
+                    }, 5000);
+                    changeWeek(0);
+                },
+                error: function(error) {
+                    console.log('Error: ', error);
+                    alert('Unable to save appointment. Please try again later.');
+                }
+            });
+        });
+        
+        $(document).ready(function(){
+            changeWeek(0);
+        });
+
+    </script>
+
+}

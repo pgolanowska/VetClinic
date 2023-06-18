@@ -1,0 +1,30 @@
+﻿@model IEnumerable<VetClinic.Data.Data.Staff.Employee>
+@{
+    ViewData["Title"] = "Our Staff";
+}
+<div class="container" id="main">
+    <div class="section">
+        <div class="row">
+            <div class="col s12 center">
+                <p class="left-align light">
+                    <hr/>
+                        @foreach (var item in Model)
+                        {
+                        <div class="column-container">
+                            <div class="column">
+                                <img src="@Url.Action("GetPhoto", "Home", new { id = item.EmployeeId })" style="width: 250px; height: 250px;" />
+                            </div>
+                            <div class="text-column">
+                                <h4>@item.EmployeeName @item.EmployeeSurname, @item.Title.TitleAbbrev</h4>
+                                <br/>
+                                @item.EmployeeBio
+                                <br/>
+                            </div>
+                        </div>
+                        <hr/>
+                        }              
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

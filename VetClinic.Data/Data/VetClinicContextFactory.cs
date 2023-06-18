@@ -13,7 +13,7 @@ namespace VetClinic.Data.Data
         public VetClinicContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<VetClinicContext>();
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=VetClinicContext23;Trusted_Connection=True;MultipleActiveResultSets=true");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=VetClinicContext2023;Trusted_Connection=True;MultipleActiveResultSets=true");
 
             return new VetClinicContext(optionsBuilder.Options);
         }

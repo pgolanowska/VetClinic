@@ -1,0 +1,37 @@
+﻿@{
+    List<string> imagePaths = ViewData["ImagePaths"] as List<string> ?? new List<string>();
+}
+
+<div class="row">
+<br/>
+    @foreach (var imagePath in imagePaths)
+    {
+        <a href="#" class="thumbnail" onclick="showModalImage(event, '@Url.Content(imagePath)')">
+            <img src="@Url.Content(imagePath)" alt="Image" class="img-thumbnail" style="height: 200px; width: auto;">
+        </a>
+    }
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img id="modalImage" src="" alt="Selected Image" class="img-fluid">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showModalImage(event, imagePath) {
+        event.preventDefault();
+        var modal = document.getElementById('imageModal');
+        var modalImage = document.getElementById('modalImage');
+        modalImage.src = imagePath;
+        $(modal).modal('show');
+    }
+</script>

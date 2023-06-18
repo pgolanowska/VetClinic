@@ -980,7 +980,7 @@
 }
 
 .teal {
-  background-color: #009688 !important;
+    background-color: #16697A !important;
 }
 
 .teal-text {
@@ -2659,7 +2659,7 @@ a {
 }
 
 /* 24dp elevation */
-.z-depth-5, .modal {
+.z-depth-5 {
   -webkit-box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
           box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
 }
@@ -4414,9 +4414,9 @@ nav ul a.btn > .material-icons, nav ul a.btn-large > .material-icons, nav ul a.b
   line-height: inherit;
 }
 
-nav ul a:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-}
+    nav ul a:hover {
+        background-color: rgba(255, 166, 43, 0.1);
+    }
 
 nav ul.left {
   float: left;
@@ -5748,12 +5748,10 @@ body.keyboard-focused .dropdown-content li:focus {
 
 .modal {
   display: none;
-  position: fixed;
   left: 0;
   right: 0;
-  background-color: #fafafa;
   padding: 0;
-  max-height: 70%;
+  max-height: 90%;
   width: 55%;
   margin: auto;
   overflow-y: auto;
@@ -5781,7 +5779,6 @@ body.keyboard-focused .dropdown-content li:focus {
 
 .modal .modal-footer {
   border-radius: 0 0 2px 2px;
-  background-color: #fafafa;
   padding: 4px 6px;
   height: 56px;
   width: 100%;
@@ -5794,14 +5791,12 @@ body.keyboard-focused .dropdown-content li:focus {
 
 .modal-overlay {
   position: fixed;
-  z-index: 999;
   top: -25%;
   left: 0;
   bottom: 0;
   right: 0;
-  height: 125%;
+  height: 150%;
   width: 100%;
-  background: #000;
   display: none;
   will-change: opacity;
 }

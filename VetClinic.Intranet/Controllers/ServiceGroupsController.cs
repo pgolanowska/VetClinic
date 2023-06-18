@@ -5,18 +5,21 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting.Internal;
 using VetClinic.Data.Data;
 using VetClinic.Data.Data.Clinic;
+using VetClinic.Data.Data.Staff;
 
 namespace VetClinic.Intranet.Controllers
 {
     public class ServiceGroupsController : Controller
     {
         private readonly VetClinicContext _context;
-
-        public ServiceGroupsController(VetClinicContext context)
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        public ServiceGroupsController(VetClinicContext context, IWebHostEnvironment hostingEnvironment)
         {
             _context = context;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         // GET: ServiceGroups
@@ -48,7 +51,8 @@ namespace VetClinic.Intranet.Controllers
         // GET: ServiceGroups/Create
         public IActionResult Create()
         {
-            return View();
+            ServiceGroup sg = new ServiceGroup();
+            return View(sg);
         }
 
         // POST: ServiceGroups/Create
@@ -56,8 +60,29 @@ namespace VetClinic.Intranet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ServiceGroupId,ServiceGroupName,ServiceGroupDesc,ServiceGroupIsActive")] ServiceGroup serviceGroup)
+        public async Task<IActionResult> Create([Bind("ServiceGroupId,ServiceGroupName,ServiceGroupDesc,ServiceGroupIconName,ServiceGroupIsActive")] ServiceGroup serviceGroup)
         {
+
+            //if (ServiceGroupIcon != null && ServiceGroupIcon.Length > 0)
+            //{
+            //    // Set the folder where you want to save the uploaded files
+            //    string folderPath = Path.Combine(_hostingEnvironment.WebRootPath, "uploads");
+            //    Directory.CreateDirectory(folderPath);
+
+            //    // Generate a unique filename for the uploaded file to avoid name conflicts
+            //    string uniqueFileName = Guid.NewGuid().ToString() + "_" + ServiceGroupIcon.FileName;
+            //    string filePath = Path.Combine(folderPath, uniqueFileName);
+
+            //    // Save the file to the folder
+            //    using (var fileStream = new FileStream(filePath, FileMode.Create))
+            //    {
+            //        await ServiceGroupIcon.CopyToAsync(fileStream);
+            //    }
+
+            //    // Store the relative file path and filename in the database
+            //    serviceGroup.ServiceGroupIconName = Path.Combine("uploads", uniqueFileName);
+            //}
+
             if (ModelState.IsValid)
             {
                 _context.Add(serviceGroup);
@@ -88,7 +113,7 @@ namespace VetClinic.Intranet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ServiceGroupId,ServiceGroupName,ServiceGroupDesc,ServiceGroupIsActive")] ServiceGroup serviceGroup)
+        public async Task<IActionResult> Edit(int id, [Bind("ServiceGroupId,ServiceGroupName,ServiceGroupDesc,ServiceGroupIsActive,ServiceGroupIconName")] ServiceGroup serviceGroup)
         {
             if (id != serviceGroup.ServiceGroupId)
             {

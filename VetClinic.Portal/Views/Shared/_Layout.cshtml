@@ -8,11 +8,14 @@
     <title>@ViewData["Title"] - VetClinic.Portal</title>
 
     <!-- CSS -->
+   
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="~/lib/materialize/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="~/icons/material-design-iconic-font/css/materialdesignicons.min.css" type="text/css" rel="stylesheet" />
     <link href="~/css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
     <link href="~/css/site.css" type="text/css" rel="stylesheet" media="screen,projection" />
-
+    <link href="~/css/gallery-bootstrap.css" type="text/css" rel="stylesheet" media="screen,projection" />
+  
     <link rel="stylesheet" href="~/owl.carousel/dist/assets/owl.carousel.min.css" />
     <link rel="stylesheet" href="~/owl.carousel/dist/assets/owl.theme.default.css" />
 
@@ -21,25 +24,29 @@
     <script src="~/lib/materialize/js/materialize.js"></script>
     <script src="~/js/init.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="~/jquery/dist/jquery.js"></script>
     <script src="~/owl.carousel/dist/owl.carousel.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </head>
 
 <body>
     <nav class="white" role="navigation">
         <div class="nav-wrapper container">
-            <a id="logo-container" href="#" class="brand-logo">
-                <img src="~/img/logo.png" height="40 px"/>
-                <img src="~/img/text-logo.jpg" height="40 px"/>
+            <a id="logo-container" href="@Url.Action("Index","Home")" class="brand-logo">
+                <img src="~/img/logo.png" height="50 px" style="margin-top: 10px; margin-bottom: 0px" />
+                <img src="~/img/text-logo.jpg" height="40 px" style="margin-top: 5px; margin-bottom: 5px" />
             </a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Appointment</a></li>
+                <li><a href="@Url.Action("AboutUs","Home")">About Us</a></li>
+                <li><a href="@Url.Action("OurStaff","Home")">Our Staff</a></li>
+                <li><a href="@Url.Action("Services","Home")">Services</a></li>
+                <li><a href="@Url.Action("Index","Appointment")">Appointment</a></li>
                 <li><a href="#">Shop</a></li>
                 <li><a href="#">Contact</a></li>
+                <li><a href="@Url.Action("Login","Account")">Log In</a></li>
             </ul>
 
             <ul id="nav-mobile" class="sidenav">
@@ -55,80 +62,20 @@
     </nav>
 
     <div id="index-banner" class="parallax-container">
-        <div class="section no-pad-bot">
-            <div class="container">
-                <br><br><br><br>
-                <h1 class="header center teal-text text-lighten-2">Cutting-edge<br />Veterinary Medicine</h1>
-                <br><br>
-
-            </div>
+        <div class="title-container">
+            <p class="title-text">Cutting-edge</p>
+            <p class="title-text second-line">veterinary</p>
+            <p class="title-text third-line">medicine</p>
+            <button class="btn btn-primary">BOOK NOW</button>
         </div>
         <div class="parallax"><img src="~/img/background1.jpg"/></div>
     </div>
 
-
-    <div class="container">
-        <div class="section">
-
-            <!--   Icon Section   -->
-            <div class="row">
-                <div class="owl-carousel owl-theme">
-                    <div class="owl-container">
-                        <div class="icon">
-                            <img class="icon-darkteal" src="~/img/fontawesome-free-6.3.0-web/svgs/solid/hand-holding-heart.svg" />
-                        </div>
-                        <div class="owl-desc">
-                            <h4>Cardiology</h4>
-                            <div class="entry-content">
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div> rzecz2 </div>
-                    <div> rzecz3 </div>
-                    <div> rzecz4 </div>
-                    <div> rzecz5 </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
+    @RenderBody()
 
     <div class="parallax-container valign-wrapper">
         <div class="section no-pad-bot">
             <div class="container">
-                <div class="row center">
-                    <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
-                </div>
-            </div>
-        </div>
-        <div class="parallax"><img src="~/img/background2.jpg"></div>
-    </div>
-
-    <div class="container">
-        <div class="section">
-
-            <div class="row">
-                <div class="col s12 center">
-                    <h3><i class="mdi-content-send brown-text"></i></h3>
-                    <h4>Contact Us</h4>
-                    <p class="left-align light">
-                        @RenderBody()
-                    </p>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-
-    <div class="parallax-container valign-wrapper">
-        <div class="section no-pad-bot">
-            <div class="container">
-                <div class="row center">
-                    <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
-                </div>
             </div>
         </div>
         <div class="parallax"><img src="~/img/background3.jpg"></div>
@@ -138,37 +85,37 @@
         <div class="container">
             <div class="row">
                 <div class="col l6 s12">
-                    <h5 class="white-text">Company Bio</h5>
-                    <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
-
+                    <h5 class="white-text">Our Clinic</h5>
+                    <p class="grey-text text-lighten-4">
+                        123 Vet Lane<br />
+                        45678 Default City<br />
+                        Mon-Fri 9-5<br />
+                    </p>
 
                 </div>
                 <div class="col l3 s12">
-                    <h5 class="white-text">Settings</h5>
-                    <ul>
-                        <li><a class="white-text" href="#!">Link 1</a></li>
-                        <li><a class="white-text" href="#!">Link 2</a></li>
-                        <li><a class="white-text" href="#!">Link 3</a></li>
-                        <li><a class="white-text" href="#!">Link 4</a></li>
-                    </ul>
+                    <h5 class="white-text">Info</h5>
+                    @*@await Html.PartialAsync("InfoPageLinks", (IEnumerable<VetClinic.Data.Data.CMS.InfoPage>) ViewBag.InfoPages)*@
+                    @await Component.InvokeAsync("InfoPageLinksComponent")
+
                 </div>
                 <div class="col l3 s12">
-                    <h5 class="white-text">Connect</h5>
+                    <h5 class="white-text">Contact</h5>
                     <ul>
-                        <li><a class="white-text" href="#!">Link 1</a></li>
-                        <li><a class="white-text" href="#!">Link 2</a></li>
-                        <li><a class="white-text" href="#!">Link 3</a></li>
-                        <li><a class="white-text" href="#!">Link 4</a></li>
+                        <li><i class="mdi mdi-cellphone" style="color: #EDE7E3"></i> <a class="white-text" href="#!">555-555-123</a></li>
+                        <li><i class="mdi mdi-email" style="color: #EDE7E3"></i> <a class="white-text" href="#!">contact@vetclinic.com</a></li>
+                        <li><i class="mdi mdi-facebook" style="color: #EDE7E3"></i> <a class="white-text" href="#!">vetclinic</a></li>
+                        <li><i class="mdi mdi-instagram" style="color: #EDE7E3"></i> <a class="white-text" href="#!">vetclinic</a></li>
                     </ul>
                 </div>
             </div>
         </div>
         <div class="footer-copyright">
             <div class="container">
+                ⓒ 2023 VetClinic
             </div>
         </div>
     </footer>
-
-
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

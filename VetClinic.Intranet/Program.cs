@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using VetClinic.Intranet.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<VetClinicContext>(options =>
@@ -16,6 +17,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<VetClinicContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<EmailService>();
 
 var app = builder.Build();
 

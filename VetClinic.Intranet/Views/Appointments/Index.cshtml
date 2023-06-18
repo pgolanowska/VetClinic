@@ -1,0 +1,111 @@
+﻿@model IEnumerable<VetClinic.Data.Data.Clinic.Appointment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>Appointments > Index</h3>
+<br/><br/>
+<div style="margin: 0px auto; text-align:center">
+    <a asp-action="Index" asp-route-appPeriod="" class="btn btn-primary">All</a> |
+    <a asp-action="Index" asp-route-appPeriod="Past" class="btn btn-primary">Past</a> |
+    <a asp-action="Index" asp-route-appPeriod="Today" class="btn btn-primary">Today</a> |
+    <a asp-action="Index" asp-route-appPeriod="Future" class="btn btn-primary">Upcoming</a>
+</div>
+<br/><br/>
+<table class="table">
+    <thead>
+        <tr style="border-bottom: solid 1px darkgrey; text-align: center">
+            <th></th>
+            <th style="text-align: left">
+                @Html.DisplayNameFor(model => model.Employee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OwnerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OwnerPhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OwnerEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PetName)
+            </th>
+            <th>
+                Issue
+            </th>
+            <th>
+                Confirmed?
+            </th>
+            <th>
+                Arrived?
+            </th>
+            <th>
+                Completed?
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody style="margin: 2px">
+@foreach (var item in Model) {
+        <tr style="vertical-align:middle">
+
+                <td>
+                    <img src="@Url.Action("GetPhoto", "Employees", new { id = item.EmployeeId })" style="width: 100px; height: 100px;" />
+                </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Employee.EmployeeName) @Html.DisplayFor(modelItem => item.Employee.EmployeeSurname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppointmentDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OwnerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OwnerPhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OwnerEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PetName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IssueDescription)
+            </td>
+            <td>
+                    @(item.IsConfirmed ? "Confirmed" : "Not Confirmed")
+            </td>
+            <td>
+                    @(item.HasArrived ? "Arrived" : "Not Arrived Yet")
+            </td>
+            <td>
+                    @(item.IsCompleted ? "Completed" : "Not Completed")
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.AppointmentId" class="btn btn-primary">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.AppointmentId" class="btn btn-primary">Details</a> |
+                    @if (item.IsConfirmed) {
+                        <input type="submit" class="btn btn-primary" value="Confirmed" disabled>
+                    }
+                    else
+                    {
+                        <a asp-action="ConfirmAppointment" asp-route-id="@item.AppointmentId" class="btn btn-primary">Confirm</a>
+                    }
+                     |
+                    <a asp-action="Delete" asp-route-id="@item.AppointmentId" class="btn btn-danger">Cancel</a>
+                </td>
+        </tr>
+}
+    </tbody>
+</table>
+<br/>
+<div class="form-group">
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <a href="javascript:window.history.back();" class="btn btn-secondary">Back</a>
+</div>

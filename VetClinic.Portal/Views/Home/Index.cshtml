@@ -2,4 +2,17 @@
     ViewData["Title"] = "Home Page";
 }
 
-rzeczy
+@await Html.PartialAsync("OwlServiceItems", (IEnumerable<VetClinic.Data.Data.Clinic.ServiceGroup>) ViewBag.ServiceGroupModel)
+
+<div class="parallax-container">
+    <div class="my-second-container">
+        <p class="title-text third-line">One place</p>
+        <p class="title-text second-line">for all your</p>
+        <p class="title-text third-line">pet needs</p>
+    </div>
+    <div class="parallax"><img src="~/img/background2.jpg"></div>
+</div>
+
+<div class="container" id="main">
+    @await Html.PartialAsync("News", (IEnumerable<VetClinic.Data.Data.CMS.News>) ViewBag.News)
+</div>

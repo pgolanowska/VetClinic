@@ -1,0 +1,29 @@
+﻿@model VetClinic.Portal.ViewModels.LoginViewModel
+@{
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+@{
+    ViewData["Title"] = "Log In";
+}
+
+<div style="width: 60%; padding: 60px; align-self: center">
+        <div class="row">
+            <div class="col-md-8">
+                <section>
+                    <form asp-action="Login" asp-controller="Account" method="post">
+                        <div class="form-group">
+                            <label asp-for="Email"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password"></label>
+                            <input asp-for="Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Log in</button>
+                    </form>
+                </section>
+            </div>
+        </div>
+</div>

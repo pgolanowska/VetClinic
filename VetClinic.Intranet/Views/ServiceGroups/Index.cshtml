@@ -6,9 +6,12 @@
 
 <h3>Clinic > Services > Index</h3>
 <hr />
-<table class="table">
-    <thead>
+<table class="table" style="vertical-align: central">
+    <thead style="text-align: center">
         <tr>
+            <th width="200">
+                @Html.DisplayNameFor(model => model.ServiceGroupIconName)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.ServiceGroupName)
             </th>
@@ -20,8 +23,11 @@
     </thead>
     <tbody>
     @foreach (var item in Model) {
-        <tr>
-            <td>
+        <tr style="vertical-align:middle">
+            <td width="200" style="text-align:center">
+                <i class="mdi @Html.DisplayFor(modelItem => item.ServiceGroupIconName)" style="color: #16697A; font-size: 50px"></i>
+            </td>
+            <td style="text-align: center">
                 @Html.DisplayFor(modelItem => item.ServiceGroupName)
             </td>
             <td>

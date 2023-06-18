@@ -1,0 +1,28 @@
+﻿@model IEnumerable<VetClinic.Data.Data.Staff.EmployeeSchedule>
+<div class="dashboard-widget">
+    <h3>Today's Schedule</h3>
+    <table class="dashboard-widget-table">
+        <thead>
+            <tr>
+                <th></th>
+                <th style="width: 20%">Name</th>
+                <th style="width: 20%">Shift Start</th>
+                <th style="width: 15%">Shift End</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employeeSchedule in Model)
+            {
+                <tr style="vertical-align:middle">
+                    <td>
+                        <img src="@Url.Action("GetPhoto", "Employees", new { id = employeeSchedule.EmployeeId })" style="width: 100px; height: 100px;" />
+                    </td>
+                    <td>@employeeSchedule.Employee.EmployeeName @employeeSchedule.Employee.EmployeeSurname</td>
+                    <td>@employeeSchedule.StartTime</td>
+                    <td>@employeeSchedule.EndTime</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

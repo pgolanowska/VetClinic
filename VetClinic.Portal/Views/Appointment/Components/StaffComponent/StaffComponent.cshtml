@@ -1,0 +1,12 @@
+﻿@model IEnumerable<VetClinic.Data.Data.Staff.Employee>
+<ul>
+    <br/>
+    @if(Model != null)
+    {
+        @foreach (var item in Model)
+        {
+            <li><a href="#">@item.EmployeeName @item.EmployeeSurname</a></li>
+        }
+    }
+    <br/>
+</ul>

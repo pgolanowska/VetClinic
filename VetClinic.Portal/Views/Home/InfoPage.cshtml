@@ -1,0 +1,18 @@
+﻿@model VetClinic.Data.Data.CMS.InfoPage
+@{
+    ViewData["Title"] = Model.InfoPageTitle;
+}
+<div class="container" id="main">
+<div class="section">
+    <div class="row">
+        <div class="col s12 center">
+            <h4>@Model.InfoPageTitle</h4>
+            </div>
+            <br/>
+            <p class="left-align light">
+                @Html.Raw(Model.InfoContent)
+            </p>
+        </div>
+    </div>
+</div>
+</div>

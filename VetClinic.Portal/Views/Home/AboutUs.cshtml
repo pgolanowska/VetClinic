@@ -1,0 +1,23 @@
+﻿@model VetClinic.Data.Data.Clinic.Info
+<div class="container" id="main">
+    <div class="section">
+        <div class="row">
+            <div class="col s12 center">
+                <h4>About Us</h4>
+                <p class="left-align light">              
+                    @*<div class="column-container">
+                        <div class="column">
+                            <img src="~/img/pup3.png" style="height:300px; width: 300px;" />
+                        </div>
+                        <div class="text-column">
+                            <h1><i>Woof Woof</i></h1>
+                            <h5>- Dr Puppy McPupface, DVM</h5>
+                        </div>
+                    </div>*@
+                    @Html.Raw(Model.InfoDesc)
+                </p>
+                @await Html.PartialAsync("Gallery", ViewData["ImagePaths"])
+            </div>
+        </div>
+    </div>
+</div>

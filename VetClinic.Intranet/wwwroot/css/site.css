@@ -37,3 +37,134 @@ body {
 .active {
     display: block;
 }
+
+.schedule-container {
+    padding: 10px;
+    text-align: center;
+    align-content: center;
+}
+
+#schedule-table {
+    margin: auto;
+    width: 80%;
+    text-align: center;
+    align-content: center;
+    vertical-align: middle;
+}
+
+#schedule-table td {
+    height: 125px;
+    border-bottom: 1px solid lightgrey
+}
+
+#schedule-table th {
+    height: 70px;
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: 1px solid lightgrey
+}
+
+.date-selector {
+    padding-bottom: 30px;
+    text-align: center;
+    align-content: center;
+    font-size: larger;
+}
+
+.selector-button {
+    margin: 15px;
+    padding: 3px 6px 3px 6px;
+    text-align: center;
+    align-content: center;
+}
+
+.time-input {
+    margin: 1px;
+    width: 125px;
+}
+
+.day-off .day-off-label {
+    margin: 0px;
+}
+
+checkbox {
+    margin: 0px;
+}
+
+.dashboard-widget {
+    margin-top: 30px;
+    padding: 10px;
+    width: 45%;
+    border: 1px solid darkgray
+}
+
+    .dashboard-widget h3 {
+        width: 300px;
+        margin-top: -25px;
+        margin-left: 5px;
+        background: #f4f6f9;
+    }
+
+.dashboard-widget-welcome {
+    margin-top: 30px;
+    padding: 10px;
+    width: 45%;
+}
+
+    .dashboard-widget-table {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+.dashboard-widget-table td {
+    padding: 5px;
+}
+
+.dashboard-widget-table th {
+    font-weight: 600;
+}
+
+.table-button-td {
+    padding: 0px;
+}
+
+.dashboard-components {
+    width: 100%;
+    padding: 0px 100px 0px 100px;
+}
+
+select {
+    width:100%;
+    border: 1px solid lightgray;
+    min-height: 40px;
+}
+
+.appointment-radio-button {
+    display: inline-block;
+    min-height: 30px;
+    padding: 5px 5px;
+    margin: 10px;
+    background-color: teal;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+    .appointment-radio-button:hover {
+        background-color: white;
+        color: black;
+        border: 1px solid teal;
+    }
+
+    .appointment-radio-button.selected {
+        background-color: #008CBA;
+        color: white;
+    }
+
+.appointmentSlots {
+    margin-top: 5px;
+}

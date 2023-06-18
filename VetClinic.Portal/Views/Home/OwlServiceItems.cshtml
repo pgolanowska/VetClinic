@@ -1,0 +1,23 @@
+﻿@model IEnumerable<VetClinic.Data.Data.Clinic.ServiceGroup>
+<div class="container">
+    <div class="section">
+        <div class="row">
+            <div class="owl-carousel owl-theme">
+                @foreach(var item in Model)
+                {
+                    <div class="owl-container">
+                        <div class="owl-icon">
+                            <i class="mdi @item.ServiceGroupIconName" style="color: #16697A; font-size: 50px"></i>
+                        </div>
+                        <div class="owl-desc">
+                            <h4>@item.ServiceGroupName</h4>
+                            <div class="entry-content">
+                                <p>@item.ServiceGroupDesc</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

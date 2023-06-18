@@ -1,0 +1,261 @@
+﻿@model IEnumerable<VetClinic.Data.Data.Staff.EmployeeSchedule>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>Schedule > Index</h3>
+
+<div class="schedule-container">
+
+    <div class="date-selector">
+        <button class="selector-button" id="prevWeek" onclick="changeWeek(-1)"> < </button>
+        <span id="week-selector"> </span>
+        <button class="selector-button" id="nextWeek" onclick="changeWeek(1)"> > </button>
+    </div>
+
+    <table class="table" id="schedule-table">
+        <thead class="thead-light">
+            <tr>
+                <th style="text-align: center; align-content: center; width: 8%"> </th>
+                <th style="text-align: left; align-content: center; width: 10%">Employee</th>
+
+                    @foreach (var day in ViewBag.ClinicSchedule)
+                    {
+                        <th style="text-align: center; align-content: center; width: 12%">@day.Comment</th>
+                    }
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <br/>
+    <button class="btn btn-secondary" id="copy-button">Copy Previous Week</button>
+    <button class="btn btn-primary" id="save-button">Save</button>
+    <br/>
+</div>
+
+
+
+@section Scripts
+{
+    <script>
+        let currentDate = new Date();
+        let start;
+        let employeeId;
+        let employeeName;
+        let newEntries = [];
+
+        function formatDate(date) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Intl.DateTimeFormat('en-UK', options).format(date);
+        }
+
+        function getWeekRange(date) {
+            start = new Date(date);
+            start.setDate(date.getDate() - (date.getDay() + 6) % 7);
+            const end = new Date(start);
+            end.setDate(start.getDate() + 6);
+            return [start, end];
+        }
+
+        function updateWeekRange() {
+            const [start, end] = getWeekRange(currentDate);
+            document.getElementById('week-selector').innerText = `${formatDate(start)} - ${formatDate(end)}`;
+        }
+        
+        function changeWeek(direction) {
+            currentDate.setDate(currentDate.getDate() + direction * 7);
+            updateWeekRange();
+            $(document).trigger('weekChanged');
+       }
+
+        updateWeekRange();
+
+        function loadCurrent()
+        {
+            updateWeekRange();
+        }
+        
+        $(document).on('weekChanged', function ()
+        {
+            const [start, end] = getWeekRange(currentDate);
+            
+            const startStr = start.toISOString().split('T')[0];
+            const endForDB = new Date(start);
+            endForDB.setDate(start.getDate() + 7);
+            const endStr = endForDB.toISOString().split('T')[0]; 
+
+            $.ajax({
+                url: '/EmployeeSchedule/GetSchedulesForWeek',
+                type: 'GET',
+                data: { start: startStr, end: endStr },
+                dataType: 'json',
+                success: function (schedules)
+                {
+                    console.log(startStr);
+                    console.log(start);
+                    console.log(endStr);
+                    console.log(end);
+                    console.log(schedules);
+                    $("#schedule-table tr:has(td)").remove();
+                    schedules.forEach(function (item)
+                    {
+                        var row = $("<tr data-employee-id='" + item.employeeId + "'/>");
+                        $("#schedule-table").append(row);
+                        
+                        row.append($("<td><img id='employee-photo' src='/Employees/GetPhoto/" + item.employeeId +"' style='width:80px; height: 80px;'></td>"));
+                        row.append($("<td data-employee-id='" + item.employeeId + "'>" + item.employeeName + "</td>"));
+
+                        for (var i = 0; i < 7; i++)
+                        {
+                                var dayObject = item.weekSchedule[i.toString()];
+                                var schedule = dayObject ? Object.values(dayObject).toString().split(",") : "Off";
+                                var td = $("<td style='text-align: center; align-content: center;'>");
+
+                                var checkBox = $("<input type='checkbox' class='day-off' data-day-index='" + i + "' id='"+item.employeeId+i+"'><label class='day-off-label' for='"+item.employeeId+i+"'> </label><br/>");
+                                td.append(checkBox);
+
+                                checkBox.prop('checked', true);
+                                var startInput = $("<input class='time-input' type='time' value='" + schedule[0] + "' data-day-index='" + i + "'/><br/>");
+                                td.append(startInput);
+                                var endInput = $("<input class='time-input' type='time' value='" + schedule[1] + "' data-day-index='" + i + "'/><br/>");
+                                td.append(endInput);
+
+                                if (schedule == "Off")
+                                {
+                                    checkBox.prop('checked', false);
+                                    checkBox.siblings('.time-input').prop('hidden', true);
+                                }
+    
+                                td.append("</td>");
+                                row.append(td);
+                          }
+                      });
+                  }
+             });
+        });
+
+        $(document).on('change', '.day-off', function() {
+            var checkBox = $(this);
+            if(checkBox.is(":checked"))
+            {
+                checkBox.siblings('.time-input').prop('hidden', false);
+            }
+            else
+            {
+                checkBox.siblings('.time-input').prop('hidden', true);
+            }
+        });
+
+        $(document).on('click', '#save-button', function () {
+            const [start, end] = getWeekRange(currentDate);
+            const startStr = start.toISOString().split('T')[0];
+            const endForDB = new Date(start);
+            endForDB.setDate(start.getDate() + 7);
+            const endStr = endForDB.toISOString().split('T')[0];
+
+            $.ajax({
+                url: '/EmployeeSchedule/DeleteSchedulesForWeek',
+                type: 'POST',
+                data: { start: startStr, end: endStr },
+                success: function ()
+                {
+                    
+                    $('#schedule-table tr').each(function () {
+                        const employeeId = $(this).find('td[data-employee-id]').data('employee-id');
+                        $(this).find('td:not(:first-child)').each(function (index) {
+                            if ($(this).find('.day-off').is(':checked')) {
+                                const startTime = $(this).find('.time-input').eq(0).val();
+                                const endTime = $(this).find('.time-input').eq(1).val();
+                                var dayIndex = $(this).find('.day-off').data('day-index');
+                                dateToSend = new Date();
+                                dateToSend.setHours(2,0,0);
+                                dateToSend.setDate(start.getDate() + dayIndex);
+
+                                newEntries.push({
+                                    employeeId: employeeId,
+                                    scheduleDate: dateToSend,
+                                    isWorking: true,
+                                    startTime: startTime.split(':')[0] + ":00:00",
+                                    endTime: endTime.split(':')[0] + ":00:00"
+                                });
+                            }
+                        });
+
+                        console.log(newEntries);
+                    });
+
+                    $.ajax({
+                        url: '/EmployeeSchedule/AddSchedules',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify(newEntries),
+                        success: function () {
+                            alert('Schedule successfully updated!');
+                            newEntries = [];
+                        },
+                        error: function () {
+                            alert('Error updating the schedule.');
+                                newEntries = [];
+                        }
+                    });
+                },
+                error: function () {
+                    alert('Error deleting the old schedule.');
+                }
+            });
+        });
+
+        $(document).on('click', '#copy-button', function () {
+            const [start, end] = getWeekRange(new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000));
+
+            const startStr = start.toISOString().split('T')[0];
+            const endForDB = new Date(start);
+            endForDB.setDate(start.getDate() + 7);
+            const endStr = endForDB.toISOString().split('T')[0];
+
+            $.ajax({
+                url: '/EmployeeSchedule/GetSchedulesForWeek',
+                type: 'GET',
+                data: { start: startStr, end: endStr },
+                dataType: 'json',
+                success: function (previousWeekSchedules) {
+
+                    console.log(previousWeekSchedules);
+                    $('.time-input').val('');
+
+                    previousWeekSchedules.forEach(function (employeeSchedule) {
+                        const row = $('#schedule-table tr[data-employee-id="' + employeeSchedule.employeeId + '"]');
+
+                        for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
+                            const daySchedule = employeeSchedule.weekSchedule[dayIndex.toString()];
+                            const td = row.find('td').eq(dayIndex + 2);
+
+                            if (daySchedule) {
+                                const schedule = Object.values(daySchedule).toString().split(",");
+                                console.log(schedule);
+                                td.find('.day-off').prop('checked', true);
+                                td.find('.time-input').eq(0).val(schedule[0]);
+                                td.find('.time-input').eq(0).prop('hidden', false);
+                                td.find('.time-input').eq(1).val(schedule[1]);
+                                td.find('.time-input').eq(1).prop('hidden', false);
+                            } else {
+                                td.find('.day-off').prop('checked', false);
+                            }
+                        }
+                    });
+                },
+                error: function () {
+                    alert('There was an error fetching last week`s schedule.');
+                }
+            });
+        });
+
+
+        $(document).ready(function(){
+            changeWeek(0);
+        });
+
+    </script>
+}

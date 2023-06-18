@@ -1,0 +1,10 @@
+﻿@model IEnumerable<VetClinic.Data.Data.CMS.InfoPage>
+<ul>
+    @if(Model != null)
+    {
+        @foreach (var item in Model)
+        {
+            <li>@Html.ActionLink(item.InfoLinkTitle, "InfoPage", "Home", new {id=item.InfoPageId}, new {@style="color:#EDE7E3;" })</li>
+        }
+    }
+</ul>

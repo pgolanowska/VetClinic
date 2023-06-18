@@ -11,12 +11,13 @@
     <title>@ViewData["Title"] - VetClinic.Intranet</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/clock.css" asp-append-version="true" />
 
     <!-- chartist CSS -->
-    <link href="~/lib/assets/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
-    <link href="~/lib/assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
+    @*<link href="~/lib/assets/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
+    <link href="~/lib/assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">*@
     <!--c3 CSS -->
-    <link href="~/lib/assets/plugins/c3-master/c3.min.css" rel="stylesheet">
+@*    <link href="~/lib/assets/plugins/c3-master/c3.min.css" rel="stylesheet">*@
 
     <!-- Dashboard 1 Page CSS -->
     <link href="~/lib/html/css/pages/dashboard.css" rel="stylesheet">
@@ -25,16 +26,18 @@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+       @* <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>*@
     <![endif]-->
     <!-- Custom CSS -->
     <link href="~/lib/html/css/style.css" rel="stylesheet">
     <!-- Dashboard 1 Page CSS -->
-    <link href="~/lib/html/css/pages/dashboard.css" rel="stylesheet">
+@*    <link href="~/lib/html/css/pages/dashboard.css" rel="stylesheet">*@
     <!-- You can change the theme colors from here -->
-    <link href="~/lib/html/css/colors/default-dark.css" id="theme" rel="stylesheet">
-
+@*    <link href="~/lib/html/css/colors/default-dark.css" id="theme" rel="stylesheet">*@
+@*    <link href="~/icons/material-design-iconic-font/css/materialdesignicons.min.css" type="text/css" rel="stylesheet" />
+*@
+ @*   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>*@
 </head>
 
 <body class="fix-header fix-sidebar card-no-border">
@@ -135,7 +138,12 @@
                             </a>
                         </li>
                         <li>
-                            <a class="waves-effect waves-dark" aria-expanded="false">
+                            <a class="waves-effect waves-dark" aria-expanded="false" asp-controller="EmployeeSchedule" asp-action="Index">
+                                <i class="mdi mdi-timetable" style="color: #EDE7E3"></i><span class="hide-menu">Schedule</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="waves-effect waves-dark" aria-expanded="false" asp-controller="Appointments" asp-action="Index">
                                 <i class="mdi mdi-table" style="color: #EDE7E3"></i><span class="hide-menu">Appointments</span>
                             </a>
                         </li>
@@ -172,9 +180,20 @@
                                 <i class="mdi mdi-book-open-page-variant" style="color: #EDE7E3"></i><span class="hide-menu">Pages</span>
                             </a>
                         </li>
+
                         <li>
-                            <a class="waves-effect waves-dark" aria-expanded="false">
-                                <i class="mdi mdi-help-circle" style="color: #EDE7E3"></i><span class="hide-menu">Settings</span>
+                            <a class="waves-effect waves-dark" aria-expanded="false" asp-controller="InfoPages" asp-action="Index">
+                                <i class="mdi mdi-information" style="color: #EDE7E3"></i><span class="hide-menu">Info Pages</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="waves-effect waves-dark" aria-expanded="false" asp-controller="ServiceGroups" asp-action="Index">
+                                <i class="mdi mdi-help-circle" style="color: #EDE7E3"></i><span class="hide-menu">Service Groups</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="waves-effect waves-dark" aria-expanded="false" asp-controller="Services" asp-action="Index">
+                                <i class="mdi mdi-shopping" style="color: #EDE7E3"></i><span class="hide-menu">Services</span>
                             </a>
                         </li>
                     </ul>
@@ -193,7 +212,7 @@
             <!-- ============================================================== -->
             <!-- Container fluid  -->
             <!-- ============================================================== -->
-            <div class="container-fluid">
+            <div class="container-fluid" style="min-height:1150px">
                 @RenderBody()
 
                 <!-- ============================================================== -->
@@ -221,29 +240,33 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="~/lib//assets/plugins/jquery/jquery.min.js"></script>
+    @*<script src="~/lib//assets/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap popper Core JavaScript -->
-    <script src="~/lib//assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib//assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>*@
     <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="~/lib/html/js/perfect-scrollbar.jquery.min.js"></script>
+    @*<script src="~/lib/html/js/perfect-scrollbar.jquery.min.js"></script>*@
     <!--Wave Effects -->
     <script src="~/lib/html/js/waves.js"></script>
     <!--Menu sidebar -->
-    <script src="~/lib/html/js/sidebarmenu.js"></script>
+   @* <script src="~/lib/html/js/sidebarmenu.js"></script>*@
     <!--Custom JavaScript -->
-    <script src="~/lib/html/js/custom.min.js"></script>
+    @*<script src="~/lib/html/js/custom.min.js"></script>*@
     <!-- ============================================================== -->
     <!-- This page plugins -->
     <!-- ============================================================== -->
     @*    <script src="~/lib/assets/plugins/chartist-js/dist/chartist.min.js"></script>
     <script src="~/lib/assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>*@
     <!--c3 JavaScript -->
-    <script src="~/lib/assets/plugins/d3/d3.min.js"></script>
-    <script src="~/lib/assets/plugins/c3-master/c3.min.js"></script>
+@*    <script src="~/lib/assets/plugins/d3/d3.min.js"></script>
+    <script src="~/lib/assets/plugins/c3-master/c3.min.js"></script>*@
+    <script src="~/js/tinymce/tinymce.min.js"></script>
     <!-- Chart JS -->
-    @*    <script src="~/lib/html/js/dashboard.js"></script>*@
+    @*<script src="~/lib/html/js/dashboard.js"></script>*@
 
     <script src="~/js/site.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+@*    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+*@
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

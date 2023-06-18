@@ -1,0 +1,54 @@
+﻿@model IEnumerable<VetClinic.Data.Data.CMS.InfoPage>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>Info Pages > Index</h3>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.InfoLinkTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InfoPageTitle)
+            </th>
+            <th width="800px">
+                @Html.DisplayNameFor(model => model.InfoContent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InfoLastEdited)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.InfoLinkTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InfoPageTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InfoContent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InfoLastEdited)
+            </td>
+            <td>
+                    <a asp-action="Edit" asp-route-id="@item.InfoPageId" class="btn btn-primary">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.InfoPageId" class="btn btn-primary">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.InfoPageId" class="btn btn-primary">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div class="form-group">
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <a href="javascript:window.history.back();" class="btn btn-primary">Back</a>
+</div>

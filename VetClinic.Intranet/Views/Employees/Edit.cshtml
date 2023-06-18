@@ -22,18 +22,19 @@
                 <span asp-validation-for="EmployeeSurname" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EmployeeTitleId" class="control-label"></label>
-                <input asp-for="EmployeeTitleId" class="form-control" />
-                <span asp-validation-for="EmployeeTitleId" class="text-danger"></span>
+                <label asp-for="TitleId" class="control-label"></label>
+                <br />
+                @Html.DropDownListFor(model => model.TitleId, new SelectList(ViewBag.Titles, "TitleId", "TitleName"), "Select Title")
+                <span asp-validation-for="TitleId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EmployeePositionId" class="control-label"></label>
-                <input asp-for="EmployeePositionId" class="form-control" />
-                <span asp-validation-for="EmployeePositionId" class="text-danger"></span>
+                @Html.Label("PositionId")
+                <br />
+                @Html.DropDownListFor(model => model.PositionId, new SelectList(ViewBag.Positions, "PositionId", "PositionName"), "Select Position")
             </div>
             <div class="form-group">
                 <label asp-for="EmployeeEducation" class="control-label"></label>
-                <input asp-for="EmployeeEducation" class="form-control" />
+                <input asp-for="EmployeeEducation" class="form-control"/>
                 <span asp-validation-for="EmployeeEducation" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -42,17 +43,23 @@
                 <span asp-validation-for="EmployeeBio" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EmployeePhotoURL" class="control-label"></label>
-                <input asp-for="EmployeePhotoURL" class="form-control" />
-                <span asp-validation-for="EmployeePhotoURL" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                @Html.CheckBoxFor(model => model.EmployeeIsActive)
-                @Html.LabelFor(model => model.EmployeeIsActive, "Is Active")
+                <label class="control-label">Services</label>
+                <br />
+                <div class="flex flex-xl-column btn-group-toggle" data-toggle="buttons">
+                    <div>
+                        @foreach (var serviceGroup in ViewBag.ServiceGroups)
+                        {
+                            <label class="btn btn-secondary @(ViewBag.SelectedGroups?.Contains(serviceGroup.ServiceGroupId) == true ? "active" : "")">
+                                <input type="checkbox" name="SelectedServiceGroups" value="@serviceGroup.ServiceGroupId" @(ViewBag.SelectedGroups?.Contains(serviceGroup.ServiceGroupId) == true ? "checked" : "")>
+                                <div>@serviceGroup.ServiceGroupName</div>
+                            </label>
+                        }
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-primary">Back to List</a>
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
             </div>
         </form>
     </div>
@@ -60,4 +67,6 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 }

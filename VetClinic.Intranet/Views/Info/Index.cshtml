@@ -1,0 +1,47 @@
+﻿@model IEnumerable<VetClinic.Data.Data.Clinic.Info>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.InfoTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InfoDesc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InfoIsActive)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.InfoTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InfoDesc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InfoIsActive)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.InfoId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.InfoId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.InfoId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

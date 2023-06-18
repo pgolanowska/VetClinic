@@ -1,0 +1,131 @@
+﻿@model VetClinic.Data.Data.Clinic.Appointment
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h3>Appointments > Create</h3>
+<br />
+<br />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label>Employee</label><br />
+                @Html.DropDownListFor(model => model.EmployeeId, new SelectList(ViewBag.Employees, "EmployeeId", "EmployeeName"), "Select Employee")
+                <span asp-validation-for="EmployeeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AppointmentDateTime" class="control-label"></label>
+                <input type="date" asp-for="AppointmentDateTime.Date" class="form-control" id="appointmentDate" style="margin-bottom: 5px"/>
+                <span asp-validation-for="AppointmentDateTime" class="text-danger"></span>
+                <br/>
+                <input type="hidden" asp-for="AppointmentDateTime" id="fullAppointmentDateTime" />
+                <div id="appointmentSlots" style="min-height:30px"></div>
+            </div>
+            <div class="form-group">
+                <label asp-for="OwnerName" class="control-label"></label>
+                <input asp-for="OwnerName" class="form-control" />
+                <span asp-validation-for="OwnerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OwnerPhoneNumber" class="control-label"></label>
+                <input asp-for="OwnerPhoneNumber" class="form-control" />
+                <span asp-validation-for="OwnerPhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OwnerEmail" class="control-label"></label>
+                <input asp-for="OwnerEmail" class="form-control" />
+                <span asp-validation-for="OwnerEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PetName" class="control-label"></label>
+                <input asp-for="PetName" class="form-control" />
+                <span asp-validation-for="PetName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IssueDescription" class="control-label"></label>
+                <textarea asp-for="IssueDescription" class="form-control"></textarea>
+                <span asp-validation-for="IssueDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" id="submitButton" disabled />
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var selectedEmployeeId;
+        var selectedDate;
+
+        document.getElementById('appointmentDate').addEventListener('change', function () {
+            selectedDate = this.value;
+            clearAppointmentSlots();
+            if (selectedEmployeeId) {
+                updateAvailableSlots();
+            }
+        });
+
+        document.getElementById('EmployeeId').addEventListener('change', function () {
+            selectedEmployeeId = this.value;
+            clearAppointmentSlots();
+            if (selectedDate) {
+                updateAvailableSlots();
+            }
+        });
+
+        function clearAppointmentSlots() {
+            $('#appointmentSlots').empty();
+            $('#submitButton').prop('disabled', true);
+            $('#appointmentTime').val('');
+        }
+
+        function updateAvailableSlots() {
+            $.ajax({
+                url: '/Appointments/GetAvailableSlots',
+                method: 'GET',
+                data: {
+                    employeeId: selectedEmployeeId,
+                    date: selectedDate
+                },
+                success: function (availableSlots) {
+                    var appointmentSlotsDiv = $('#appointmentSlots');
+                    appointmentSlotsDiv.empty();
+
+                    availableSlots.forEach(function (slot) {
+                        var radioButton = $("<input type='radio' id='timeSlot" + slot + "' name='appointment-radio' value='" + slot + "' style='display:none;'>");
+                        var labelForRadioButton = $("<label for='timeSlot" + slot + "' class='appointment-radio-button'>" + slot + "</label>");
+                        appointmentSlotsDiv.append(radioButton).append(labelForRadioButton);
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                }
+            });
+        };
+
+        $(document).ready(function () {
+            selectedDate = $('#appointmentDate').val();
+
+            $(document).on('change', "input[type='radio'][name='appointment-radio']", function () {
+                $('.appointment-radio-button').removeClass('selected');
+                var labelForThisRadioButton = $("label[for='" + this.id + "']");
+
+                labelForThisRadioButton.addClass('selected');
+
+                var timeValue = this.value.slice(0, 5);
+                $('#fullAppointmentDateTime').val(selectedDate + 'T' + this.value);
+                if ($("input[type='radio'][name='appointment-radio']:checked").length > 0) {
+                    $('#submitButton').prop('disabled', false);
+                }
+            });
+
+        });
+
+
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

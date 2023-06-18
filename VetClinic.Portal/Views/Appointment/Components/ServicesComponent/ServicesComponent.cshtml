@@ -1,0 +1,12 @@
+﻿@model IEnumerable<VetClinic.Data.Data.Clinic.ServiceGroup>
+<ul class="left hide-on-med-and-down teal">
+    <li style="width:70px"><a class = "white-text" href="@Url.ActionLink("Index","Appointment",new {id=-1})"><i class="mdi mdi-view-headline" style="font-size:36px"></i></a></li>
+
+    @if(Model != null)
+    {
+        @foreach (var item in Model)
+        {
+             <li>@Html.ActionLink(item.ServiceGroupName,"Index","Appointment",new {id=item.ServiceGroupId},new { @class = "white-text" })</li>
+        }
+    }
+</ul>

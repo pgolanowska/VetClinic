@@ -21,12 +21,12 @@ namespace VetClinic.Data.Data.Staff
         public string EmployeeSurname { get; set; }
 
         [Display(Name = "Employee's Title")]
-        public int EmployeeTitleId { get; set; }
-        public Title Title { get; set; }
+        public int TitleId { get; set; }
+        public Title? Title { get; set; }
 
         [Display(Name = "Employee's Position")]
-        public int EmployeePositionId { get; set; }
-        public Position Position { get; set; }
+        public int PositionId { get; set; }
+        public Position? Position { get; set; }
 
         [MaxLength(100, ErrorMessage = "Education info cannot exceed 100 chars")]
         [Display(Name = "Employee's Education")]
@@ -36,10 +36,17 @@ namespace VetClinic.Data.Data.Staff
         [Column(TypeName = "nvarchar(max)")]
         public string EmployeeBio { get; set; }
 
-        [Display(Name = "Employee's Photo URL")]
-        public string EmployeePhotoURL { get; set; }
+        [Display(Name = "Employee's Photo")]
+        [Column(TypeName = "varbinary(max)")]
+        public byte[] EmployeePhoto { get; set; }
 
         [Column(TypeName = "bit")]
         public bool EmployeeIsActive { get; set; }
+        public List<EmployeeServiceGroup>? EmployeeServiceGroups { get; set; }
+        public Employee()
+        {
+            this.EmployeeIsActive = true;
+            this.EmployeeServiceGroups = new List<EmployeeServiceGroup>();
+        }
     }
 }

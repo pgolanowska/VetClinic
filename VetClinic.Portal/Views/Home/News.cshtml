@@ -1,0 +1,56 @@
+﻿@model IEnumerable<VetClinic.Data.Data.CMS.News>
+
+<style>
+    .news-container {
+        display: flex;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .news-items-wrapper {
+        display: flex;
+        transition: transform 1s;
+        width: calc(40% * @{
+        Model.Count();
+});
+    }
+
+    .news-item {
+        flex-shrink: 0;
+        width: 40%;
+        margin: 50px 60px 50px 60px;
+    }
+</style>
+
+<div class="news-container">
+    <div class="news-items-wrapper">
+        @foreach (var newsItem in Model)
+        {
+            <div class="news-item">
+                <h3>@newsItem.LinkTitle</h3>
+                <p>@Html.Raw(newsItem.Content)</p>
+                <p><small>@newsItem.AddedDate.ToString("dd.mm.yyyy")</small></p>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const displayTime = 3000; // Time in milliseconds for each set of news items to be displayed
+
+        const newsContainer = document.querySelector(".news-container");
+        const newsItemsWrapper = document.querySelector(".news-items-wrapper");
+        const newsItems = document.querySelectorAll(".news-item");
+
+        let currentItem = 0;
+
+        function slideNewsItems() {
+            currentItem = (currentItem + 1) % newsItems.length;
+            const singleItemWidth = newsItems[0].clientWidth + 60; // 60px is the sum of left and right margins
+            newsItemsWrapper.style.transform = `translateX(-${singleItemWidth * currentItem}px)`;
+        }
+
+        setInterval(slideNewsItems, displayTime);
+    });
+</script>

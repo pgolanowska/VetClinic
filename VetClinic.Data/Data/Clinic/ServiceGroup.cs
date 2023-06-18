@@ -22,11 +22,19 @@ namespace VetClinic.Data.Data.Clinic
         [Column(TypeName = "bit")]
         public bool ServiceGroupIsActive { get; set; }
 
-        public List<Position> Positions { get; set; }
+        public List<Position> Position { get; set; }
+
+        [Display(Name = "Service Group Icon")]
+        public string ServiceGroupIconName { get; set; }
+        public List<Service> Services { get; set; }
+        public List<EmployeeServiceGroup> EmployeeServiceGroups { get; set; }
 
         public ServiceGroup()
         {
-            this.Positions = new List<Position>();
+            this.Position = new List<Position>();
+            this.Services = new List<Service>();
+            this.EmployeeServiceGroups = new List<EmployeeServiceGroup>();
+            this.ServiceGroupIsActive = true;
         }
     }
 }

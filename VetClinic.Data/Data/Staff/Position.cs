@@ -18,10 +18,10 @@ namespace VetClinic.Data.Data.Staff
         [Column(TypeName = "bit")]
         public bool PositionIsActive { get; set; }
         public List<Employee> Employee { get; set; }
-        public List<ServiceGroup> ServiceGroups { get; set; }
+        public List<ServiceGroup> ServiceGroup { get; set; }
         public Position()
         {
-            this.ServiceGroups = new List<ServiceGroup>();
+            this.ServiceGroup = new List<ServiceGroup>();
             this.Employee = new List<Employee>();
         }
     }
