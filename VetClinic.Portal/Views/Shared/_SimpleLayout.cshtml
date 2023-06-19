@@ -37,7 +37,17 @@
                 <li><a href="@Url.Action("Index","Appointment")">Appointment</a></li>
                 <li><a href="#">Shop</a></li>
                 <li><a href="#">Contact</a></li>
-                <li><a href="@Url.Action("Register","Account")">Register</a></li>
+                <li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a href="@Url.Action("Profile", "Account")">Profile</a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Login","Account")">Log In</a>
+                    }
+                </li>
+                <li><a href="@Url.Action("Index","SavedItems")"><i class="mdi mdi-bookmark" style="color: #16697A; font-size: 20px"></i></a></li>
             </ul>
 
             <ul id="nav-mobile" class="sidenav">

@@ -43,6 +43,7 @@
       </div>
       <div class="modal-footer">
         <button id="save-button" type="button" class="btn btn-primary" style="margin: 5px">Book</button>
+        <button id="save-for-later-button" type="button" class="btn btn-secondary" style="margin: 5px">Book</button>
         <button type="button" class="btn btn-secondary" style="margin: 5px" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -251,7 +252,39 @@
                 }
             });
         });
-        
+
+        $("#save-for-later-button").click(function () {
+
+            let UTCAppointmentDateTime = new Date(appointmentDate.toDateString() + ' ' + appointmentTime);
+            UTCAppointmentDateTime.setHours(UTCAppointmentDateTime.getHours() + 2);
+
+            let appointment = {
+                EmployeeId: employeeId,
+                AppointmentDateTime: UTCAppointmentDateTime,
+            };
+
+            console.log(appointment);
+
+            $.ajax({
+                url: '/SavedItems/SaveAppointmentForLater',
+                type: 'POST',
+                data: JSON.stringify(appointment),
+                contentType: 'application/json',
+                success: function (response) {
+
+                    setTimeout(function () {
+                        $('#appointmentModal').modal('hide');
+                    }, 500);
+                    changeWeek(0);
+                    alert('Appointment added to saved items!');
+                },
+                error: function (error) {
+                    console.log('Error: ', error);
+                    alert('Unable to save appointment. Please try again later.');
+                }
+            });
+        });
+
         $(document).ready(function(){
             changeWeek(0);
         });

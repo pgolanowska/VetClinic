@@ -1,0 +1,24 @@
+﻿@model IEnumerable<VetClinic.Data.Data.CMS.SavedItem>
+@{
+    Layout = "~/Views/Shared/_SimpleLayout.cshtml";
+    ViewData["Title"] = "Saved Stuff";
+}
+<br/>
+Saved Appointments:
+<hr />
+<table>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Employee.EmployeeName @item.Employee.EmployeeSurname</td>
+                <td>@item.AppointmentDateTime</td>
+                <td>
+                    <a href="@Url.Action("Delete", "SavedItems", new { id = item.SavedItemId })">
+                        <i class="mdi mdi-delete-forever" style="color: #16697A; font-size: 16px"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

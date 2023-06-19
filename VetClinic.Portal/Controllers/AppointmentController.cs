@@ -106,6 +106,5 @@ namespace VetClinic.Portal.Controllers
                 .ToList();
             return Json(appointments);
         }
-
     }
 }

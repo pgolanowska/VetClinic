@@ -4,6 +4,8 @@ using VetClinic.Data.Data.Clients;
 using VetClinic.Data.Data;
 using VetClinic.Portal.ViewModels;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VetClinic.Portal.Controllers
 {
@@ -78,17 +80,19 @@ namespace VetClinic.Portal.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login(string returnUrl = null)
+        public IActionResult Login(string? returnUrl = null)
         {
+            returnUrl = Url.Action("Profile", "Account");
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
         {
-            ViewData["ReturnUrl"] = returnUrl;
+            returnUrl = Url.Action("Profile", "Account");
             if (ModelState.IsValid)
             {
                 var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
@@ -115,6 +119,31 @@ namespace VetClinic.Portal.Controllers
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+            if (User == null || User.Identity == null || string.IsNullOrEmpty(User.Identity.Name))
+            {
+                Trace.WriteLine("hrrrr");
+                return RedirectToAction("Login", "Account");
+            }
+
+            var user = await userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
+            }
+
+            var model = new ProfileViewModel
+            {
+                Email = user.Email,
+                Name = context.Client.Where(c => c.ClientId == user.ClientId).Select(c => c.ClientName).FirstOrDefault(),
+                Surname = context.Client.Where(c => c.ClientId == user.ClientId).Select(c => c.ClientSurname).FirstOrDefault(),
+            };
+
+            return View(model);
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿@model VetClinic.Portal.ViewModels.LoginViewModel
 @{
-    Layout = "~/Views/Shared/_AccountLayout.cshtml";
-}
-@{
+    Layout = "~/Views/Shared/_SimpleLayout.cshtml";
     ViewData["Title"] = "Log In";
 }
 
@@ -21,7 +19,12 @@
                             <input asp-for="Password" class="form-control" />
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
-                        <button type="submit" class="btn btn-primary">Log in</button>
+                        <div class="form-group form-control" style="margin-top:20px">
+                        <input type="checkbox" asp-for="RememberMe" id="RememberMe" style="vertical-align:middle">
+                        <label for="RememberMe" style="margin-left:2px">Remember me</label>
+                        </div>
+                        <br/>
+                        <div style="text-align:center"><button type="submit" class="btn btn-primary">Log In</button></div>
                     </form>
                 </section>
             </div>

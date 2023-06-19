@@ -34,6 +34,7 @@ namespace VetClinic.Data.Data
         public DbSet<Appointment> Appointment { get; set; }
         public DbSet<Client> Client { get; set; }
         public DbSet<ClientUser> ClientUser { get; set; }
+        public DbSet<SavedItem> SavedItem { get; set; }
 
     }
 }
