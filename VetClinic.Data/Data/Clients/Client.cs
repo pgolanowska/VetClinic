@@ -20,11 +20,10 @@ namespace VetClinic.Data.Data.Clients
         [Display(Name = "Client's Surname")]
         public string ClientSurname { get; set; }
 
-        [Required(ErrorMessage = "Address is required")]
         [Display(Name = "Client's Address")]
         public string? ClientAddress { get; set; }
 
-        [Required(ErrorMessage = "Phone number is required")]
+        [MaxLength(30, ErrorMessage = "Phone number cannot exceed 30 chars")]
         [Display(Name = "Client's Phone Number")]
         public string? ClientPhoneNumber { get; set; }
 

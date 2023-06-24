@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VetClinic.CompanionApp.Views.Pet.PetsPage"
+             xmlns:converters="clr-namespace:VetClinic.CompanionApp.Helpers">
+    <ContentPage.Resources>
+        <converters:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter"/>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid>
+            <ListView ItemsSource="{Binding Pets}" HasUnevenRows="True" ItemTapped="OnPetSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.RowSpan="3"
+                                       Source="{Binding PetPicture, Converter={StaticResource ByteArrayToImageSourceConverter}}"
+                                       Aspect="AspectFit"
+                                       HeightRequest="60"
+                                       WidthRequest="60"/>
+                                <Label Grid.Column="1"
+                                       Text="{Binding PetName}"
+                                       FontAttributes="Bold"
+                                       LineBreakMode="TailTruncation"/>
+                                <Label Grid.Column="1"
+                                       Grid.Row="1"
+                                       Text="{Binding PetSpecies}"
+                                       LineBreakMode="TailTruncation"
+                                       VerticalOptions="End"/>
+                                <Label Grid.Column="1"
+                                       Grid.Row="2">
+                                    <Label.Text>
+                                        <Binding Path="PetDateOfBirth" 
+                                                 StringFormat='Born on {0:dd/MM/yyyy}' />
+                                    </Label.Text>
+                                </Label>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+            <ImageButton Source="add_pet.png" 
+                     BackgroundColor="Transparent"
+                     Command="{Binding AddPetCommand}"
+                     HorizontalOptions="Start"
+                     VerticalOptions="End"
+                     Margin="20"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

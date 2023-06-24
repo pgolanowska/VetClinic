@@ -6,20 +6,15 @@ using VetClinic.Portal.ViewModels;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
 
 namespace VetClinic.Portal.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
-        private readonly UserManager<ClientUser> userManager;
-        private readonly SignInManager<ClientUser> signInManager;
-        private readonly VetClinicContext context;
-
-        public AccountController(UserManager<ClientUser> userManager, SignInManager<ClientUser> signInManager, VetClinicContext context)
+        public AccountController(UserManager<ClientUser> userManager, SignInManager<ClientUser> signInManager, IWebHostEnvironment hostingEnvironment, VetClinicContext context)
+            :base(userManager, signInManager, hostingEnvironment, context)
         {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
-            this.context = context;
         }
 
         // GET: /User/Register
@@ -126,24 +121,11 @@ namespace VetClinic.Portal.Controllers
         {
             if (User == null || User.Identity == null || string.IsNullOrEmpty(User.Identity.Name))
             {
-                Trace.WriteLine("hrrrr");
                 return RedirectToAction("Login", "Account");
             }
 
-            var user = await userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
-            }
-
-            var model = new ProfileViewModel
-            {
-                Email = user.Email,
-                Name = context.Client.Where(c => c.ClientId == user.ClientId).Select(c => c.ClientName).FirstOrDefault(),
-                Surname = context.Client.Where(c => c.ClientId == user.ClientId).Select(c => c.ClientSurname).FirstOrDefault(),
-            };
-
-            return View(model);
+            ProfileViewModel CurrentUser = JsonConvert.DeserializeObject<ProfileViewModel>(HttpContext.Session.GetString("CurrentUser"));
+            return View(CurrentUser);
         }
     }
 }

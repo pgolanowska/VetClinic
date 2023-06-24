@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VetClinic.CompanionApp.Views.User.RegisterPage"
+             Shell.NavBarIsVisible="False">
+    <ContentPage.Content>
+        <StackLayout Padding="30" Spacing="10" VerticalOptions="CenterAndExpand">
+            <Image x:Name="logoImage" 
+                   Source="logo.png" 
+                   HorizontalOptions="CenterAndExpand"
+                   HeightRequest="200"
+                   WidthRequest="200"
+                   Aspect="AspectFit" />
+
+            <Image x:Name="textLogoImage" 
+                   Source="text-logo.jpg" 
+                   HorizontalOptions="CenterAndExpand"
+                   WidthRequest="200"
+                   Aspect="AspectFit" />
+
+            <Label Text="First Name" Margin="0,30,0,0"/>
+            <Entry Text="{Binding Name}" />
+
+            <Label Text="Last Name" />
+            <Entry Text="{Binding Surname}" />
+
+            <Label Text="Email" />
+            <Entry Text="{Binding Email}" />
+
+            <Label Text="Password" />
+            <Entry Text="{Binding Password}" IsPassword="True"/>
+
+            <Button Text="Register" Command="{Binding RegisterCommand}" Margin="0,30,0,0"/>
+            <Button Text="Cancel" Command="{Binding NavigateToLoginCommand}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

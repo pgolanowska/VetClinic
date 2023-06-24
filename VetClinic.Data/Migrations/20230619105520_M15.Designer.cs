@@ -181,7 +181,6 @@ namespace VetClinic.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClientId"), 1L, 1);
 
                     b.Property<string>("ClientAddress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ClientEmail")
@@ -197,8 +196,7 @@ namespace VetClinic.Data.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("ClientPhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("ClientSurname")
                         .IsRequired()

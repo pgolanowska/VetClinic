@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VetClinic.CompanionApp.Views.Pet.AddOrEditPetHistoryPage"
+             Title="Add Pet History">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="30">
+                <Label Text="Entry Title" />
+                <Entry Placeholder="Title" Text="{Binding PetHistory.PetHistoryTitle}" />
+                <Label Text="Entry Date" />
+                <DatePicker Date="{Binding PetHistory.PetHistoryCreatedDate}" />
+                <Label Text="Pet's Weight" />
+                <Entry Placeholder="Weight" Text="{Binding LatestWeight}" />
+                <Label Text="Entry Notes" />
+                <Editor Placeholder="Notes" Text="{Binding PetHistory.PetHistoryNotes}" HeightRequest="200"/>
+                <Button Text="Submit" Command="{Binding AddPetHistoryCommand}" Margin="0,30,0,0"/>
+                <Button Text="Cancel" Command="{Binding CancelCommand}" />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

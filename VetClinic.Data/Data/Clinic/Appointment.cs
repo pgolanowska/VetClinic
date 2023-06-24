@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VetClinic.Data.Data.Clients;
 using VetClinic.Data.Data.Staff;
 
 namespace VetClinic.Data.Data.Clinic
@@ -18,12 +19,17 @@ namespace VetClinic.Data.Data.Clinic
         public Employee? Employee { get; set; }
         [Display(Name = "Appointment Date")]
         public DateTime AppointmentDateTime { get; set; }
+        public int? ClientId { get; set; }
+        public Client? Client { get; set; }
+
         [Display(Name = "Owner's Name")]
         public string OwnerName { get; set; }
         [Display(Name = "Owner's Phone")]
         public string OwnerPhoneNumber { get; set; }
         [Display(Name = "Owner's E-mail")]
         public string OwnerEmail { get; set; }
+        public int? PetId { get; set; }
+        public Pet? Pet { get; set; }
         [Display(Name = "Pet's Name")]
         public string PetName { get; set; }
         [Display(Name = "Issue Description")]

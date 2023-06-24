@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using VetClinic.Data.Data.Clients;
 using VetClinic.Data.Data.Clinic;
 using VetClinic.Data.Data.CMS;
+using VetClinic.Data.Data.Data;
 using VetClinic.Data.Data.Staff;
 
 namespace VetClinic.Data.Data
@@ -34,6 +35,10 @@ namespace VetClinic.Data.Data
         public DbSet<Appointment> Appointment { get; set; }
         public DbSet<Client> Client { get; set; }
         public DbSet<ClientUser> ClientUser { get; set; }
+        public DbSet<Pet> Pet { get; set; }
+        public DbSet<PetHistory> PetHistory { get; set; }
+        public DbSet<PetSpecies> PetSpecies { get; set; }
+        public DbSet<ClientPet> ClientPet { get; set; }
         public DbSet<SavedItem> SavedItem { get; set; }
 
     }

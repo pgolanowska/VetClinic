@@ -179,11 +179,9 @@ namespace VetClinic.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClientId"), 1L, 1);
 
                     b.Property<string>("ClientAddress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ClientEmail")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("ClientIsActive")
@@ -196,7 +194,8 @@ namespace VetClinic.Data.Migrations
 
                     b.Property<string>("ClientPhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("ClientSurname")
                         .IsRequired()
@@ -206,6 +205,29 @@ namespace VetClinic.Data.Migrations
                     b.HasKey("ClientId");
 
                     b.ToTable("Client");
+                });
+
+            modelBuilder.Entity("VetClinic.Data.Data.Clients.ClientPet", b =>
+                {
+                    b.Property<int>("ClientPetId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClientPetId"), 1L, 1);
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PetId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ClientPetId");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("PetId");
+
+                    b.ToTable("ClientPet");
                 });
 
             modelBuilder.Entity("VetClinic.Data.Data.Clients.ClientUser", b =>
@@ -278,6 +300,82 @@ namespace VetClinic.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("VetClinic.Data.Data.Clients.Pet", b =>
+                {
+                    b.Property<int>("PetId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PetId"), 1L, 1);
+
+                    b.Property<string>("PetBreed")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PetDateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PetDistinguishingFeatures")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PetIsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PetName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<byte[]>("PetPicture")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("PetSex")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PetSpeciesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PetId");
+
+                    b.HasIndex("PetSpeciesId");
+
+                    b.ToTable("Pet");
+                });
+
+            modelBuilder.Entity("VetClinic.Data.Data.Clients.PetHistory", b =>
+                {
+                    b.Property<int>("PetHistoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PetHistoryId"), 1L, 1);
+
+                    b.Property<DateTime>("PetHistoryCreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PetHistoryNotes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PetHistoryTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PetHistoryUpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PetId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("PetWeight")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("PetHistoryId");
+
+                    b.HasIndex("PetId");
+
+                    b.ToTable("PetHistory");
+                });
+
             modelBuilder.Entity("VetClinic.Data.Data.Clinic.Appointment", b =>
                 {
                     b.Property<int>("AppointmentId")
@@ -288,6 +386,9 @@ namespace VetClinic.Data.Migrations
 
                     b.Property<DateTime>("AppointmentDateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("ClientId")
+                        .HasColumnType("int");
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
@@ -320,13 +421,20 @@ namespace VetClinic.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("PetId")
+                        .HasColumnType("int");
+
                     b.Property<string>("PetName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AppointmentId");
 
+                    b.HasIndex("ClientId");
+
                     b.HasIndex("EmployeeId");
+
+                    b.HasIndex("PetId");
 
                     b.ToTable("Appointment");
                 });
@@ -583,13 +691,13 @@ namespace VetClinic.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SavedItemId"), 1L, 1);
 
-                    b.Property<DateTime>("AppointmentDateTime")
+                    b.Property<DateTime?>("AppointmentDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("EmployeeId")
+                    b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsAppointment")
@@ -604,6 +712,29 @@ namespace VetClinic.Data.Migrations
                     b.HasIndex("EmployeeId");
 
                     b.ToTable("SavedItem");
+                });
+
+            modelBuilder.Entity("VetClinic.Data.Data.Data.PetSpecies", b =>
+                {
+                    b.Property<int>("PetSpeciesId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PetSpeciesId"), 1L, 1);
+
+                    b.Property<int>("PetSpeciesDescription")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("PetSpeciesIsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PetSpeciesName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PetSpeciesId");
+
+                    b.ToTable("PetSpecies");
                 });
 
             modelBuilder.Entity("VetClinic.Data.Data.Staff.Employee", b =>
@@ -824,6 +955,25 @@ namespace VetClinic.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("VetClinic.Data.Data.Clients.ClientPet", b =>
+                {
+                    b.HasOne("VetClinic.Data.Data.Clients.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VetClinic.Data.Data.Clients.Pet", "Pet")
+                        .WithMany()
+                        .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Pet");
+                });
+
             modelBuilder.Entity("VetClinic.Data.Data.Clients.ClientUser", b =>
                 {
                     b.HasOne("VetClinic.Data.Data.Clients.Client", "Client")
@@ -835,15 +985,49 @@ namespace VetClinic.Data.Migrations
                     b.Navigation("Client");
                 });
 
+            modelBuilder.Entity("VetClinic.Data.Data.Clients.Pet", b =>
+                {
+                    b.HasOne("VetClinic.Data.Data.Data.PetSpecies", "PetSpecies")
+                        .WithMany()
+                        .HasForeignKey("PetSpeciesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PetSpecies");
+                });
+
+            modelBuilder.Entity("VetClinic.Data.Data.Clients.PetHistory", b =>
+                {
+                    b.HasOne("VetClinic.Data.Data.Clients.Pet", "Pet")
+                        .WithMany()
+                        .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pet");
+                });
+
             modelBuilder.Entity("VetClinic.Data.Data.Clinic.Appointment", b =>
                 {
+                    b.HasOne("VetClinic.Data.Data.Clients.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId");
+
                     b.HasOne("VetClinic.Data.Data.Staff.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("VetClinic.Data.Data.Clients.Pet", "Pet")
+                        .WithMany()
+                        .HasForeignKey("PetId");
+
+                    b.Navigation("Client");
+
                     b.Navigation("Employee");
+
+                    b.Navigation("Pet");
                 });
 
             modelBuilder.Entity("VetClinic.Data.Data.Clinic.Service", b =>
@@ -861,9 +1045,7 @@ namespace VetClinic.Data.Migrations
                 {
                     b.HasOne("VetClinic.Data.Data.Staff.Employee", "Employee")
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EmployeeId");
 
                     b.Navigation("Employee");
                 });

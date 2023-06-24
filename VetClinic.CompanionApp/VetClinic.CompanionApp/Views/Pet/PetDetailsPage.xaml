@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:pet="clr-namespace:VetClinic.CompanionApp.ViewModels.Pet"
+             x:Class="VetClinic.CompanionApp.Views.Pet.PetDetailsPage"
+             Title="{Binding Pet.PetName}"
+             xmlns:converters="clr-namespace:VetClinic.CompanionApp.Helpers">
+    <ContentPage.Resources>
+        <converters:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter"/>
+        <converters:NullToInverseVisibilityConverter x:Key="NullToInverseVisibilityConverter"/>
+        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add History" Command="{Binding AddHistoryCommand}"/>
+    </ContentPage.ToolbarItems>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+        <ScrollView>
+            <StackLayout Padding="20">
+                <Image Source="{Binding Pet.PetPicture, Converter={StaticResource ByteArrayToImageSourceConverter}}" Aspect="AspectFill" HeightRequest="250"/>
+                <Label Text="{Binding Pet.PetName}" FontAttributes="Bold" FontSize="Large" />
+                <Label Text="{Binding Pet.PetSpecies}" />
+                <Label Text="{Binding Pet.PetDateOfBirth, StringFormat='Born on {0:d}'}" />
+                <Label Text="{Binding LatestWeight, StringFormat='Latest Weight: {0} kg'}" IsVisible="{Binding LatestWeight, Converter={StaticResource NullToVisibilityConverter}}"  />
+                <Label Text="Latest Weight: No data" IsVisible="{Binding LatestWeight, Converter={StaticResource NullToInverseVisibilityConverter}}" />
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Breed: " FontAttributes="Bold" />
+                            <Span Text="{Binding Pet.PetBreed}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Sex: " FontAttributes="Bold" />
+                            <Span Text="{Binding Pet.PetSex}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label Text="Unique Features:" FontAttributes="Bold"/>
+                <Label Text="{Binding Pet.PetDistinguishingFeatures}" />
+                <BoxView HeightRequest="1" BackgroundColor="Black" HorizontalOptions="FillAndExpand" />
+                <Label Text="History:" />
+                <ListView ItemsSource="{Binding PetHistoryCollection}" ItemTapped="OnPetHistoryEntrySelected">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text="{Binding DisplayDateAndTitle}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
+        <ImageButton Source="icon_edit.png" 
+                     BackgroundColor="Transparent"
+                     Command="{Binding EditPetCommand}"
+                     HorizontalOptions="Start"
+                     VerticalOptions="End"
+                     HeightRequest="60"
+                     Margin="20,0,0,-15"
+                     Grid.Row="1"/>
+        
+        <ImageButton Source="icon_delete.png" 
+                     BackgroundColor="Transparent"
+                     Command="{Binding DeletePetCommand}"
+                     HorizontalOptions="Start"
+                     VerticalOptions="End"
+                     HeightRequest="45"
+                     Margin="18,0,0,20"
+                     Grid.Row="2"/>
+    </Grid>
+</ContentPage>

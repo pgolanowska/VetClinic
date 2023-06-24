@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VetClinic.CompanionApp.Views.Pet.AddOrEditPetPage">
+    <ContentPage.Content>
+        <StackLayout Margin="20">
+            <Label Text="Pet Name" />
+            <Entry Text="{Binding Pet.PetName}" />
+
+            <Picker Title="Pet Species" SelectedItem="{Binding SelectedSpecies}" ItemsSource="{Binding PetSpeciesCollection}">
+                <Picker.ItemDisplayBinding>
+                    <Binding Path="PetSpeciesName" />
+                </Picker.ItemDisplayBinding>
+            </Picker>
+
+
+            <Label Text="Pet Breed" />
+            <Entry Text="{Binding Pet.PetBreed}" />
+
+            <Label Text="Pet Sex" />
+            <Entry Text="{Binding Pet.PetSex}" />
+
+            <Label Text="Date of Birth" />
+            <DatePicker Date="{Binding Pet.PetDateOfBirth}" />
+
+            <Label Text="Photo"/>
+            <Image Source="{Binding DisplayedImage}" 
+                   Aspect="AspectFit" 
+                   WidthRequest="100" 
+                   HeightRequest="100" />
+            <Button Text="Select Image" Command="{Binding SelectImageCommand}" />
+
+            <Label Text="Distinguishing Features" />
+            <Entry Text="{Binding Pet.PetDistinguishingFeatures}" HeightRequest="50"/>
+
+            <Button Text="{Binding SaveButtonText}" Command="{Binding SaveCommand}" Margin="0,30,0,0"/>
+            <Button Text="Cancel" Command="{Binding CancelCommand}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

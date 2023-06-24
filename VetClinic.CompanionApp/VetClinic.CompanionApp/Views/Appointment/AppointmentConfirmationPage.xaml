@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VetClinic.CompanionApp.Views.Appointment.AppointmentConfirmationPage">
+    <ContentPage.Content>
+        <StackLayout Padding="20">
+            <Label Text="Your Appointment Details" FontAttributes="Bold" FontSize="Medium"/>
+            <Label/>
+            <Label Text="Date: " FontAttributes="Bold"/>
+            <Label Text="{Binding SelectedDate, StringFormat='{0:yyyy-MM-dd}'}"/>
+            <Label Text="Time: " FontAttributes="Bold"/>
+            <Label Text="{Binding SelectedTimeSlot}"/>
+            <Label Text="Doctor: " FontAttributes="Bold"/>
+            <Label Text="{Binding SelectedSchedule.EmployeeName}"/>
+            <Label Text="Your Name: " FontAttributes="Bold"/>
+            <Label Text="{Binding CurrentUserProfile.DisplayNameAndSurname}"/>
+            <Label Text="Your Email: " FontAttributes="Bold"/>
+            <Entry Text="{Binding CurrentUserProfile.Email}"/>
+            <Label Text="Your Phone: " FontAttributes="Bold"/>
+            <Entry Text="{Binding CurrentUserProfile.PhoneNumber}"/>
+            <Label Text="Select Pet: " FontAttributes="Bold"/>
+            <Picker SelectedItem="{Binding SelectedPet}" ItemsSource="{Binding Pets}">
+                <Picker.ItemDisplayBinding>
+                    <Binding Path="PetName" />
+                </Picker.ItemDisplayBinding>
+            </Picker>
+            <Label Text="Issue Description: "  FontAttributes="Bold"/>
+            <Entry Text="{Binding IssueDescription}" HeightRequest="50"/>
+
+            <Button Text="Book" Command="{Binding BookAppointmentCommand}" Margin="0,30,0,0"/>
+            <Button Text="Cancel" Command="{Binding CancelCommand}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

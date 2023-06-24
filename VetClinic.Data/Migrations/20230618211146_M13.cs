@@ -17,8 +17,8 @@ namespace VetClinic.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ClientName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     ClientSurname = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    ClientAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ClientPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClientAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClientPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClientEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ClientIsActive = table.Column<bool>(type: "bit", nullable: false)
                 },

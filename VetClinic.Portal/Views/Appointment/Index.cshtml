@@ -50,6 +50,10 @@
   </div>
 </div>
 
+<input type="hidden" id="currentUserName" value="@ViewBag.CurrentUser.Name" />
+<input type="hidden" id="currentUserSurname" value="@ViewBag.CurrentUser.Surname" />
+<input type="hidden" id="currentUserEmail" value="@ViewBag.CurrentUser.Email" />
+<input type="hidden" id="currentUserPhoneNumber" value="@ViewBag.CurrentUser.PhoneNumber" />
 
 @section Scripts
 {
@@ -60,9 +64,9 @@
         let employeeName;
         let appointmentDate;
         let appointmentTime;
-        let name = $('#name').val();
-        let phone = $('#phone').val();
-        let email = $('#email').val();
+        let name = document.getElementById('currentUserName').value + " " + document.getElementById('currentUserSurname').value;
+        let phone = document.getElementById('currentUserPhoneNumber').value;
+        let email = document.getElementById('currentUserEmail').value;
         let petname = $('#petname').val();
         let description = $('#description').val();
         var bookedAppointments = [];
@@ -202,6 +206,9 @@
                 <label for="description">Issue Description:</label><br>
                 <textarea id="description" name="description" style="border: 0px; border-bottom: 1px solid darkgray; height: 100px"></textarea><br>             
               `);
+              document.getElementById('email').value = document.getElementById('currentUserEmail').value;
+            document.getElementById('name').value = document.getElementById('currentUserName').value + " " + document.getElementById('currentUserSurname').value;
+            document.getElementById('phone').value = document.getElementById('currentUserPhoneNumber').value;
               $('#appointmentModal').modal('show');
         });
 

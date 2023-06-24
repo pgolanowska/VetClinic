@@ -1,42 +1,58 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting.Internal;
+using Newtonsoft.Json;
 using System.Diagnostics;
 using VetClinic.Data.Data;
+using VetClinic.Data.Data.Clients;
 using VetClinic.Data.Data.Staff;
 using VetClinic.Portal.Models;
+using VetClinic.Portal.ViewModels;
 
 namespace VetClinic.Portal.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private readonly VetClinicContext _context;
-        private readonly IWebHostEnvironment _hostingEnvironment;
-        public HomeController(VetClinicContext context, IWebHostEnvironment hostingEnvironment)
+        public HomeController(UserManager<ClientUser> userManager, SignInManager<ClientUser> signInManager, IWebHostEnvironment hostingEnvironment, VetClinicContext context)
+            :base(userManager, signInManager, hostingEnvironment, context)
         {
-            _context = context;
-            _hostingEnvironment = hostingEnvironment;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            ViewBag.ServiceGroupModel = (from serviceGroup in _context.ServiceGroup
+            ViewBag.ServiceGroupModel = (from serviceGroup in context.ServiceGroup
                                          where serviceGroup.ServiceGroupIsActive == true
                                          select serviceGroup).ToList();
 
-            ViewBag.News = (from news in _context.News
+            ViewBag.News = (from news in context.News
                                          where news.NewsIsNotArchived == true
                                          orderby news.AddedDate
                             select news).ToList();
 
-            ViewBag.InfoPages = (from infoPage in _context.InfoPage
+            ViewBag.InfoPages = (from infoPage in context.InfoPage
                             where infoPage.IsActive == true
                             orderby infoPage.InfoPageId
                             select infoPage).ToList();
+
+            var user = await userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                ProfileViewModel CurrentUser = new ProfileViewModel
+                {
+                    Email = user.Email,
+                    Name = context.Client.Where(c => c.ClientId == user.ClientId).Select(c => c.ClientName).FirstOrDefault(),
+                    Surname = context.Client.Where(c => c.ClientId == user.ClientId).Select(c => c.ClientSurname).FirstOrDefault(),
+                    //PhoneNumber = context.Client.Where(c => c.ClientId == user.ClientId).Select(c => c.ClientPhoneNumber).SingleOrDefault(),
+                };
+
+                HttpContext.Session.SetString("CurrentUser", JsonConvert.SerializeObject(CurrentUser));
+            }
+
             return View();
         }
         public IActionResult AboutUs()
         {
-            ViewBag.InfoPages = (from infoPage in _context.InfoPage
+            ViewBag.InfoPages = (from infoPage in context.InfoPage
                                  where infoPage.IsActive == true
                                  orderby infoPage.InfoPageId
                                  select infoPage).ToList();
@@ -50,21 +66,21 @@ namespace VetClinic.Portal.Controllers
             List<string> relativeImagePaths = imageFiles.Select(file => "/gallery/" + Path.GetFileName(file)).ToList();
             ViewData["ImagePaths"] = relativeImagePaths;
 
-            return View((from info in _context.Info
+            return View((from info in context.Info
                          where info.InfoTitle == "About"
                          select info).FirstOrDefault());
         }
 
         public IActionResult OurStaff()
         {
-            ViewBag.InfoPages = (from infoPage in _context.InfoPage
+            ViewBag.InfoPages = (from infoPage in context.InfoPage
                                  where infoPage.IsActive == true
                                  orderby infoPage.InfoPageId
                                  select infoPage).ToList();
 
-            return View((from employee in _context.Employee
-                         join title in _context.Title on employee.TitleId equals title.TitleId
-                         join position in _context.Position on employee.PositionId equals position.PositionId
+            return View((from employee in context.Employee
+                         join title in context.Title on employee.TitleId equals title.TitleId
+                         join position in context.Position on employee.PositionId equals position.PositionId
                          where employee.EmployeeIsActive == true
                          select new Employee
                          {
@@ -80,28 +96,28 @@ namespace VetClinic.Portal.Controllers
         }
         public IActionResult Services()
         {
-            ViewBag.InfoPages = (from infoPage in _context.InfoPage
+            ViewBag.InfoPages = (from infoPage in context.InfoPage
                                  where infoPage.IsActive == true
                                  orderby infoPage.InfoPageId
                                  select infoPage).ToList();
 
-            return View((from serviceGroup in _context.ServiceGroup
+            return View((from serviceGroup in context.ServiceGroup
                         where serviceGroup.ServiceGroupIsActive == true
                         select serviceGroup).ToList());
         }
         public IActionResult InfoPage(int? id)
         {
-            ViewBag.InfoPages = (from infoPage in _context.InfoPage
+            ViewBag.InfoPages = (from infoPage in context.InfoPage
                                  where infoPage.IsActive == true
                                  orderby infoPage.InfoPageId
                                  select infoPage).ToList();
 
             if (id == null)
             {
-                id = _context.InfoPage.First().InfoPageId;
+                id = context.InfoPage.First().InfoPageId;
             }
 
-            var item = _context.InfoPage.Find(id);
+            var item = context.InfoPage.Find(id);
             return View(item);
         }
 
@@ -114,7 +130,7 @@ namespace VetClinic.Portal.Controllers
 
         public IActionResult GetPhoto(int id)
         {
-            var employee = _context.Employee.FirstOrDefault(e => e.EmployeeId == id);
+            var employee = context.Employee.FirstOrDefault(e => e.EmployeeId == id);
             if (employee?.EmployeePhoto != null)
             {
                 return File(employee.EmployeePhoto, "image/jpeg");

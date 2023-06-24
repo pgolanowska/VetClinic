@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VetClinic.CompanionApp.Views.User.EditProfilePage">
+    <ContentPage.Content>
+        <StackLayout Margin="20">
+            <Label Text="Your First Name" />
+            <Entry Text="{Binding CurrentUserProfile.Name}" />
+
+            <Label Text="Your Last Name" />
+            <Entry Text="{Binding CurrentUserProfile.Surname}" />
+
+            <Label Text="Your Email" />
+            <Entry Text="{Binding CurrentUserProfile.Email}" />
+
+            <Label Text="Your Phone Number" />
+            <Entry Text="{Binding CurrentUserProfile.PhoneNumber}" />
+
+            <Label Text="Your Address" />
+            <Entry Text="{Binding CurrentUserProfile.Address}" />
+
+            <Button Text="Change Password" Command="{Binding ChangePasswordCommand}" Margin="0,30,0,0"/>
+            <Button Text="Save Changes" Command="{Binding SaveCommand}" Margin="0,60,0,0"/>
+            <Button Text="Cancel" Command="{Binding CancelCommand}" />
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

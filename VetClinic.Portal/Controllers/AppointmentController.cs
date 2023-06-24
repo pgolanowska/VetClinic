@@ -1,29 +1,36 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using VetClinic.Data.Data;
+using VetClinic.Data.Data.Clients;
 using VetClinic.Data.Data.Clinic;
+using VetClinic.Portal.ViewModels;
 
 namespace VetClinic.Portal.Controllers
 {
-    public class AppointmentController : Controller
+    public class AppointmentController : BaseController
     {
-        private readonly VetClinicContext _context;
         public static int selectedServiceGroup;
-        public AppointmentController(VetClinicContext context)
+        public AppointmentController(UserManager<ClientUser> userManager, SignInManager<ClientUser> signInManager, IWebHostEnvironment hostingEnvironment, VetClinicContext context)
+            : base(userManager, signInManager, hostingEnvironment, context)
         {
-            _context = context;
         }
 
         public async Task<IActionResult> Index(int? id)
         {
             selectedServiceGroup = id ?? -1;
-            ViewBag.ClinicSchedule = (from clinicSchedule in _context.ClinicSchedule select clinicSchedule).ToList();
-            ViewBag.Employees = (from employee in _context.Employee select employee).ToList();
-            var schedule = _context.EmployeeSchedule.Include(e => e.Employee);
+            ViewBag.ClinicSchedule = (from clinicSchedule in context.ClinicSchedule select clinicSchedule).ToList();
+            ViewBag.Employees = (from employee in context.Employee select employee).ToList();
+            var schedule = context.EmployeeSchedule.Include(e => e.Employee);
+
+            ProfileViewModel profile = JsonConvert.DeserializeObject<ProfileViewModel>(HttpContext.Session.GetString("CurrentUser"));
+            ViewBag.CurrentUser = profile;
+
             return View(await schedule.ToListAsync());
         }
 
@@ -33,10 +40,10 @@ namespace VetClinic.Portal.Controllers
             if(start == null) start = new GregorianCalendar().AddDays(DateTime.Now, -((int)DateTime.Now.DayOfWeek) + 1);
             if(end == null) end = start.AddDays(4);
 
-            var schedules = _context.Employee
+            var schedules = context.Employee
                             .Where(e => selectedServiceGroup == -1 || e.EmployeeServiceGroups.Any(esg => esg.ServiceGroupId == selectedServiceGroup))
                             .GroupJoin(
-                            _context.EmployeeSchedule,
+                            context.EmployeeSchedule,
                         e => e.EmployeeId,
                         es => es.EmployeeId,
                         (e, es) => new { e, es })
@@ -84,8 +91,8 @@ namespace VetClinic.Portal.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(newAppointment);
-                await _context.SaveChangesAsync();
+                context.Add(newAppointment);
+                await context.SaveChangesAsync();
 
                 return Ok(newAppointment);
             }
@@ -95,7 +102,7 @@ namespace VetClinic.Portal.Controllers
         [HttpGet]
         public IActionResult GetBookedAppointmentsForWeek(DateTime start, DateTime end)
         {
-            var appointments = _context.Appointment
+            var appointments = context.Appointment
                 .Where(a => a.AppointmentDateTime >= start && a.AppointmentDateTime <= end)
                 .Where(a => a.IsActive == true)
                 .Select(a => new

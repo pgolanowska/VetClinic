@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VetClinic.CompanionApp.Views.Appointment.EditAppointmentPage">
+    <ContentPage.Content>
+        <StackLayout Padding="20">
+            <Label Text="Your Appointment Details" FontAttributes="Bold" FontSize="Medium"/>
+            <Label/>
+            <Label Text="Date: " FontAttributes="Bold"/>
+            <Label Text="{Binding Appointment.AppointmentDateTime}"/>
+            <Label Text="Doctor: " FontAttributes="Bold"/>
+            <Label Text="{Binding Appointment.DisplayNameAndSurname}"/>
+            <Label Text="Your Name: " FontAttributes="Bold"/>
+            <Label Text="{Binding Appointment.OwnerName}"/>
+            <Label Text="Your Email: " FontAttributes="Bold"/>
+            <Label Text="{Binding Appointment.OwnerEmail}"/>
+            <Label Text="Your Phone: " FontAttributes="Bold"/>
+            <Label Text="{Binding Appointment.OwnerPhoneNumber}"/>
+            <Label Text="Your Pet: " FontAttributes="Bold"/>
+            <Label Text="{Binding Appointment.PetName}"/>
+            <Label Text="Issue Description: "  FontAttributes="Bold"/>
+            <Entry Text="{Binding Appointment.IssueDescription}" HeightRequest="50"/>
+
+            <Button Text="Save Changes" Command="{Binding SaveChangesCommand}" Margin="0,30,0,0"/>
+            <Button Text="Cancel" Command="{Binding CancelCommand}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
