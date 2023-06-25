@@ -12,6 +12,7 @@ namespace VetClinic.Portal.Controllers
     public class SavedItemsController : Controller
     {
         public readonly VetClinicContext context;
+        SavedItems items { get; set; }
         public SavedItemsController(VetClinicContext context)
         {
             this.context = context;

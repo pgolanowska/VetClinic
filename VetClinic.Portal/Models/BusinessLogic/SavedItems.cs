@@ -63,6 +63,7 @@ namespace VetClinic.Portal.Models.BusinessLogic
             var itemToSave = (from e in context.SavedItem
                               where e.EmployeeId == id
                               && e.IsAppointment == false
+                              && e.SessionId == this.SessionId
                               select e).FirstOrDefault();
 
             if (itemToSave != null)

@@ -4,18 +4,13 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Input;
 using VetClinic.CompanionApp.Models.Appointment;
+using VetClinic.CompanionApp.Models.Pet;
 using VetClinic.CompanionApp.Services;
 using VetClinic.CompanionApp.Views.Appointment;
 using Xamarin.Forms;
 
 namespace VetClinic.CompanionApp.ViewModels.Appointment
 {
-    public class ParentChildPair
-    {
-        public ScheduleModel Parent { get; set; }
-        public string Child { get; set; }
-    }
-
     public class ScheduleViewModel : BaseViewModel
     {
         public AppointmentDataStore AppointmentDataStore => DependencyService.Get<AppointmentDataStore>();
@@ -101,6 +96,12 @@ namespace VetClinic.CompanionApp.ViewModels.Appointment
         public async void TimeSlotUnavailable()
         {
             await _pageService.DisplayAlert("Slot Unavailable", "This time slot is not available, sorry this is handled so terribly :(", "OK");
+        }
+
+        public async void DoctorDetails(ScheduleModel selectedSchedule)
+        {
+            DependencyService.RegisterSingleton<ScheduleModel>(selectedSchedule);
+            await Shell.Current.GoToAsync("DoctorDetailsPage");
         }
     }
 }

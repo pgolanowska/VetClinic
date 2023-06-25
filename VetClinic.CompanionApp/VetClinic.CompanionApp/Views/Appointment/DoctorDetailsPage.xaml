@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VetClinic.CompanionApp.Views.Appointment.DoctorDetailsPage"
+             xmlns:converters="clr-namespace:VetClinic.CompanionApp.Helpers">
+    <ContentPage.Resources>
+        <converters:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="20">
+                <Image Source="{Binding Employee.EmployeePhoto, Converter={StaticResource ByteArrayToImageSourceConverter}}" Aspect="AspectFill" HeightRequest="250"/>
+                <Label Text="{Binding Employee.DisplayNameAndSurname}" FontAttributes="Bold" FontSize="Large" />
+                <Label Text="{Binding Employee.EmployeeTitle}" />
+                <Label/>
+                <Label Text="Education: " FontAttributes="Bold"/>
+                <Label Text="{Binding Employee.EmployeeEducation}"/>
+                <Label/>
+                <Label Text="Bio: " FontAttributes="Bold" />
+                <Label Text="{Binding Employee.EmployeeBio}" />
+                <Label/>
+                <Label Text="Services:" FontAttributes="Bold" />
+                <ListView ItemsSource="{Binding Employee.EmployeeServiceGroups}" />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

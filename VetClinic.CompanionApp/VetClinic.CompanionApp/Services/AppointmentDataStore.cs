@@ -81,7 +81,17 @@ namespace VetClinic.CompanionApp.Services
                 throw new Exception("Error updating appointment");
             }
         }
-        
 
+        public async Task<EmployeeModel> GetEmployeeDetails(int id)
+        {
+            var response = await _client.GetAsync(_apiUrl + "GetEmployeeDetails/" + id);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync();
+                var employee = JsonConvert.DeserializeObject<EmployeeModel>(responseContent);
+                return employee;
+            }
+            return null;
+        }
     }
 }

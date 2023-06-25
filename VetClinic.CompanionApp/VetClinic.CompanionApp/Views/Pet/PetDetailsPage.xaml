@@ -47,7 +47,7 @@
                 <Label Text="Unique Features:" FontAttributes="Bold"/>
                 <Label Text="{Binding Pet.PetDistinguishingFeatures}" />
                 <BoxView HeightRequest="1" BackgroundColor="Black" HorizontalOptions="FillAndExpand" />
-                <Label Text="History:" />
+                <Label Text="History:"  FontAttributes="Bold"/>
                 <ListView ItemsSource="{Binding PetHistoryCollection}" ItemTapped="OnPetHistoryEntrySelected">
                     <ListView.ItemTemplate>
                         <DataTemplate>

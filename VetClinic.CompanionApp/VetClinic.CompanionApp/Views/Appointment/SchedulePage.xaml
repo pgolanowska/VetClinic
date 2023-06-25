@@ -29,7 +29,7 @@
                 <Button Text="&gt;" Command="{Binding IncreaseDateCommand}" />
             </StackLayout>
             <BoxView HeightRequest="1" Grid.Row="1" BackgroundColor="Black" HorizontalOptions="FillAndExpand" Margin="0"/>
-            <ListView x:Name="ScheduleListView" Grid.Row="2" ItemsSource="{Binding Schedule}" SelectedItem="{Binding SelectedSchedule}">
+            <ListView x:Name="ScheduleListView" Grid.Row="2" ItemsSource="{Binding Schedule}" SelectedItem="{Binding SelectedSchedule}" ItemTapped="OnDoctorTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell x:Name="parentViewCell">
@@ -45,7 +45,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Image Source="{Binding EmployeePhoto, Converter={StaticResource ByteArrayToImageSourceConverter}}"
-                                       Aspect="AspectFit" Grid.Column="0" Grid.Row="0" HorizontalOptions="Center" MinimumHeightRequest="80"/>
+                                       Aspect="AspectFit" Grid.Column="0" Grid.Row="0" HorizontalOptions="Center" MinimumHeightRequest="80" />
                                 <Label Text="{Binding EmployeeName}" Grid.Column="0" Grid.Row="1" Padding="10" HorizontalOptions="Center" VerticalOptions="Center"/>
 
                                 <ListView ItemsSource="{Binding DaySchedule}" 

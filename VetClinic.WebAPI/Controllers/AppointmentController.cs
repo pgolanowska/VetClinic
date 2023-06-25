@@ -152,5 +152,30 @@ namespace VetClinic.WebAPI.Controllers
 
             return Ok();
         }
+
+
+        [HttpGet("GetEmployeeDetails/{id}")]
+        public async Task<IActionResult> GetEmployeeDetails(int id)
+        {
+            Trace.WriteLine("test");
+            var employee = context.Employee.Include(e => e.Position).Include(e => e.Title).Where(e => e.EmployeeId == id).FirstOrDefault();
+            var serviceGroupNames = context.EmployeeServiceGroup.Where(esg => esg.EmployeeId == id)
+                                    .Select(esg => esg.ServiceGroup.ServiceGroupName).ToList();
+
+            var employeeToSend = new EmployeeResourceModel
+            {
+                EmployeeName = employee.EmployeeName,
+                EmployeeSurname = employee.EmployeeSurname,
+                EmployeeBio = employee.EmployeeBio,
+                EmployeeEducation = employee.EmployeeEducation,
+                EmployeePhoto = employee.EmployeePhoto,
+                EmployeePosition = employee.Position.PositionName,
+                EmployeeTitle = employee.Title.TitleName,
+                EmployeeServiceGroups = serviceGroupNames
+            };
+            //employeeToSend.EmployeeServiceGroups = serviceGroupNames;
+
+            return Ok(employeeToSend);
+        }
     }
 }

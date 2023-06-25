@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Newtonsoft.Json;
@@ -33,10 +34,24 @@ namespace VetClinic.Portal.Controllers
             {
                 Profile = new ProfileViewModel();
             }
-            else Profile = JsonConvert.DeserializeObject<ProfileViewModel>(HttpContext.Session.GetString("CurrentUser"));
+            else
+            {
+                Profile = JsonConvert.DeserializeObject<ProfileViewModel>(HttpContext.Session.GetString("CurrentUser"));
+                var user = this.userManager?.GetUserAsync(User).Result;
+                //var userPets = context.ClientPet.Include(cp => cp.Pet)
+                //    .Where(cp => cp.ClientId == user.ClientId)
+                //    .Where(cp => cp.Pet.PetIsActive)
+                //    .ToList();
+
+                //ViewBag.UserPets = userPets.Select(p => new SelectListItem
+                //{
+                //    Value = p.PetId.ToString(),
+                //    Text = p.Pet.PetName
+                //}).ToList();
+
+            }
 
             ViewBag.CurrentUser = Profile;
-
             return View(await schedule.ToListAsync());
         }
 
@@ -95,6 +110,11 @@ namespace VetClinic.Portal.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAppointment([FromBody] Appointment newAppointment)
         {
+            var userJson = HttpContext.Session.GetString("CurrentUser");
+            var user = JsonConvert.DeserializeObject<ProfileViewModel>(userJson);
+            int clientId = context.ClientUser.Where(c => c.Id == user.Id).Select(c => c.ClientId).FirstOrDefault();
+
+            newAppointment.ClientId = clientId;
             if (ModelState.IsValid)
             {
                 context.Add(newAppointment);

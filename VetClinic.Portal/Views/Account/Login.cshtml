@@ -3,9 +3,7 @@
     Layout = "~/Views/Shared/_SimpleLayout.cshtml";
     ViewData["Title"] = "Log In";
 }
-
-<div style="width: 60%; padding: 60px; align-self: center">
-        <div class="row">
+        <div class="row" style="width:60%; padding:60px">
             <div class="col-md-8">
                 <section>
                     <form asp-action="Login" asp-controller="Account" method="post">
@@ -26,7 +24,9 @@
                         <br/>
                         <div style="text-align:center"><button type="submit" class="btn btn-primary">Log In</button></div>
                     </form>
-                </section>
+                </section></br>
+                <div style="text-align: center">
+                    Don't have an account yet? <a asp-action="Register" asp-controller="Account">Register now!</a>
+                </div>
             </div>
         </div>
-</div>

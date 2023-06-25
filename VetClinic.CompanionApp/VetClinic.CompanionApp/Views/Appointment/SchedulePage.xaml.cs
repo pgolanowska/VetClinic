@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +36,12 @@ namespace VetClinic.CompanionApp.Views.Appointment
                 viewModel.Book(selectedSchedule, daySchedule);
             }
             else viewModel.TimeSlotUnavailable();
+        }
+
+        void OnDoctorTapped(object sender, ItemTappedEventArgs e)
+        {
+            var schedule = (ScheduleModel)e.Item;
+            viewModel.DoctorDetails(schedule);
         }
 
     }

@@ -30,6 +30,7 @@ namespace VetClinic.CompanionApp
             Routing.RegisterRoute(nameof(SchedulePage), typeof(SchedulePage));
             Routing.RegisterRoute(nameof(AppointmentDetailsPage), typeof(AppointmentDetailsPage));
             Routing.RegisterRoute(nameof(EditAppointmentPage), typeof(EditAppointmentPage));
+            Routing.RegisterRoute(nameof(DoctorDetailsPage), typeof(DoctorDetailsPage));
         }
 
     }
