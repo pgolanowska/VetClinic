@@ -4,21 +4,52 @@
     ViewData["Title"] = "Saved Stuff";
 }
 <br/>
-Saved Appointments:
-<hr />
-<table>
-    <tbody>
+<h4>Saved Appointments:</h4>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        if (item.IsAppointment == true)
+        {
+            <div class="col s3 m3">
+                <div class="card small" style="width: 250px">
+                    <div class="card-image">
+                        <img src="@Url.Action("GetPhoto", "Home", new { id = item.EmployeeId })" />
+
+                    </div>
+                    <a class="btn-floating halfway-fab waves-effect waves-light red" style="transform: translate(30%, -300%);" href="@Url.Action("Delete", "SavedItems", new { id = item.SavedItemId })" onclick="M.toast({html: 'Item removed from saved items!'})"><i class="material-icons">delete</i></a>
+
+                    <div class="card-content">
+                        <span class="card-title black-text ">@item.Employee.EmployeeName @item.Employee.EmployeeSurname</span>
+                        <p>@item.AppointmentDateTime</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    </div><br/>
+    <h4>Saved Doctors:</h4>
+    <div class="row">
         @foreach (var item in Model)
         {
-            <tr>
-                <td>@item.Employee.EmployeeName @item.Employee.EmployeeSurname</td>
-                <td>@item.AppointmentDateTime</td>
-                <td>
-                    <a href="@Url.Action("Delete", "SavedItems", new { id = item.SavedItemId })">
-                        <i class="mdi mdi-delete-forever" style="color: #16697A; font-size: 16px"></i>
-                    </a>
-                </td>
-            </tr>
+            if (item.IsAppointment == false)
+            {
+                <div class="col s3 m3">
+                    <div class="card small" style="width: 250px; padding-bottom:20px">
+                        <div class="card-image">
+                            <img src="@Url.Action("GetPhoto", "Home", new { id = item.EmployeeId })" />
+
+                        </div>
+                        <a class="btn-floating halfway-fab waves-effect waves-light red" style="transform: translate(30%, -330%);" href="@Url.Action("Delete", "SavedItems", new { id = item.SavedItemId })" onclick="M.toast({html: 'Item removed from saved items!'})"><i class="material-icons">delete</i></a>
+
+                        <div class="card-content">
+                            <span class="card-title black-text ">@item.Employee.EmployeeName @item.Employee.EmployeeSurname</span>
+                            @foreach (var group in item.Employee.EmployeeServiceGroups)
+                            {
+                                <p>@group.ServiceGroup.ServiceGroupName</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
         }
-    </tbody>
-</table>
+    </div>

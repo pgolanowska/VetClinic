@@ -102,7 +102,6 @@
 }
 @section Scripts {
     <script>
-        // JavaScript for date and time
         const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         const date = new Date();
@@ -117,7 +116,7 @@
             document.getElementById('date-time').innerHTML = `Today is ${today}, ${month} ${day}`;
         }, 1000);
 
-        // JavaScript for weather
+
         fetch('https://api.openweathermap.org/data/2.5/weather?q=Warsaw,PL&appid=15ca4dcc12d3ab634e86f53a2ae05818&units=metric')
             .then(response => response.json())
             .then(data => {
@@ -126,7 +125,6 @@
     </script>
 
     <script>
-        // Javascript is used to set the clock to your computer time.
 
         var currentSec = getSecondsToday();
 

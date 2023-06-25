@@ -30,6 +30,13 @@ namespace VetClinic.Portal.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<IActionResult> SaveDoctor(int id)
+        {
+            SavedItems items = new SavedItems(context, this.HttpContext);
+            items.SaveItem(id);
+            return RedirectToAction("Index");
+        }
+
         public async Task<IActionResult> Delete(int id)
         {
             var savedItem = await context.SavedItem.FindAsync(id);

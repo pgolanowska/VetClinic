@@ -3,20 +3,20 @@
     ViewData["Title"] = "Services";
 }
 <div class="container" id="main">
-    <div class="column-container">
-                    @foreach (var item in Model)
-                    {
-            <div class="column" style="margin: 40px">
-                            <div class="owl-icon">
-                                <i class="mdi @item.ServiceGroupIconName" style="color: #16697A; font-size: 50px"></i>
-                            </div>
-                            <div class="owl-desc">
-                                <h4>@item.ServiceGroupName</h4>
-                                <div class="entry-content">
-                                    <p>@item.ServiceGroupDesc</p>
-                                </div>
-                            </div>
-                            </div>
-                    }
+    <div class="row" style="align-content: center; text-align:center">
+        @foreach (var item in Model)
+        {
+            <div class="col s4 m4 l4" style="padding:30px">
+                <div class="owl-icon">
+                    <i class="mdi @item.ServiceGroupIconName" style="color: #16697A; font-size: 50px"></i>
+                </div>
+                <div class="owl-desc">
+                    <h4>@item.ServiceGroupName</h4>
+                    <div class="entry-content">
+                        <p>@item.ServiceGroupDesc</p>
                     </div>
-                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

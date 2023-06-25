@@ -57,9 +57,36 @@ namespace VetClinic.Portal.Models.BusinessLogic
             }
             context.SaveChanges();
         }
+
+        public void SaveItem(int id)
+        {
+            var itemToSave = (from e in context.SavedItem
+                              where e.EmployeeId == id
+                              && e.IsAppointment == false
+                              select e).FirstOrDefault();
+
+            if (itemToSave != null)
+            {
+            }
+            else
+            {
+                itemToSave = new SavedItem()
+                {
+                    SessionId = this.SessionId,
+                    IsAppointment = false,
+                    EmployeeId = id,
+                    CreatedDate = DateTime.Now
+                };
+                context.SavedItem.Add(itemToSave);
+            }
+            context.SaveChanges();
+        }
+
         public async Task<List<SavedItem>> GetSavedItems()
         {
-            return await context.SavedItem.Where(e => e.SessionId == this.SessionId).Include(e => e.Employee).ToListAsync();
+            return await context.SavedItem.Where(e => e.SessionId == this.SessionId).Include(e => e.Employee)
+                .ThenInclude(emp => emp.EmployeeServiceGroups)
+                .ThenInclude(esg => esg.ServiceGroup).ToListAsync();
         }
     }
 }

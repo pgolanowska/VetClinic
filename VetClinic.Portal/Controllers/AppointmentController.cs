@@ -16,6 +16,7 @@ namespace VetClinic.Portal.Controllers
     public class AppointmentController : BaseController
     {
         public static int selectedServiceGroup;
+        ProfileViewModel Profile { get; set; }
         public AppointmentController(UserManager<ClientUser> userManager, SignInManager<ClientUser> signInManager, IWebHostEnvironment hostingEnvironment, VetClinicContext context)
             : base(userManager, signInManager, hostingEnvironment, context)
         {
@@ -28,8 +29,13 @@ namespace VetClinic.Portal.Controllers
             ViewBag.Employees = (from employee in context.Employee select employee).ToList();
             var schedule = context.EmployeeSchedule.Include(e => e.Employee);
 
-            ProfileViewModel profile = JsonConvert.DeserializeObject<ProfileViewModel>(HttpContext.Session.GetString("CurrentUser"));
-            ViewBag.CurrentUser = profile;
+            if (HttpContext?.Session?.GetString("CurrentUser") == null)
+            {
+                Profile = new ProfileViewModel();
+            }
+            else Profile = JsonConvert.DeserializeObject<ProfileViewModel>(HttpContext.Session.GetString("CurrentUser"));
+
+            ViewBag.CurrentUser = Profile;
 
             return View(await schedule.ToListAsync());
         }

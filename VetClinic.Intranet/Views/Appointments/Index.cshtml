@@ -17,7 +17,7 @@
     <thead>
         <tr style="border-bottom: solid 1px darkgrey; text-align: center">
             <th></th>
-            <th style="text-align: left">
+            <th style="text-align: left;">
                 @Html.DisplayNameFor(model => model.Employee)
             </th>
             <th>
@@ -54,51 +54,51 @@
 @foreach (var item in Model) {
         <tr style="vertical-align:middle">
 
-                <td>
+                <td style="width: 100px">
                     <img src="@Url.Action("GetPhoto", "Employees", new { id = item.EmployeeId })" style="width: 100px; height: 100px;" />
                 </td>
-            <td>
+                <td style="width: 100px">
                     @Html.DisplayFor(modelItem => item.Employee.EmployeeName) @Html.DisplayFor(modelItem => item.Employee.EmployeeSurname)
             </td>
-            <td>
+                <td style="width: 10%;">
                 @Html.DisplayFor(modelItem => item.AppointmentDateTime)
             </td>
-            <td>
+                <td style="width: 10%;">
                 @Html.DisplayFor(modelItem => item.OwnerName)
             </td>
-            <td>
+                <td style="width: 10%;">
                 @Html.DisplayFor(modelItem => item.OwnerPhoneNumber)
             </td>
-            <td>
+            <td style="width: 5%; word-wrap: break-word; word-break: break-all; overflow-wrap: break-word;">
                 @Html.DisplayFor(modelItem => item.OwnerEmail)
             </td>
-            <td>
+                <td style="width: 7%;">
                 @Html.DisplayFor(modelItem => item.PetName)
             </td>
-            <td>
+                <td style="width: 15%;">
                 @Html.DisplayFor(modelItem => item.IssueDescription)
             </td>
-            <td>
+                <td style="width: 60px;">
                     @(item.IsConfirmed ? "Confirmed" : "Not Confirmed")
             </td>
-            <td>
+                <td style="width: 60px;">
                     @(item.HasArrived ? "Arrived" : "Not Arrived Yet")
             </td>
-            <td>
+                <td style="width: 60px;">
                     @(item.IsCompleted ? "Completed" : "Not Completed")
                 </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.AppointmentId" class="btn btn-primary">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.AppointmentId" class="btn btn-primary">Details</a> |
+                <td style="width: 25%;">
+                    <a asp-action="Edit" asp-route-id="@item.AppointmentId" class="btn btn-primary" style="margin-top: 2px">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.AppointmentId" class="btn btn-primary" style="margin-top: 2px">Details</a> |
                     @if (item.IsConfirmed) {
-                        <input type="submit" class="btn btn-primary" value="Confirmed" disabled>
+                        <input type="submit" class="btn btn-primary" value="Confirmed" disabled style="margin-top: 2px">
                     }
                     else
                     {
-                        <a asp-action="ConfirmAppointment" asp-route-id="@item.AppointmentId" class="btn btn-primary">Confirm</a>
+                        <a asp-action="ConfirmAppointment" asp-route-id="@item.AppointmentId" class="btn btn-primary" style="margin-top: 2px">Confirm</a>
                     }
                      |
-                    <a asp-action="Delete" asp-route-id="@item.AppointmentId" class="btn btn-danger">Cancel</a>
+                    <a asp-action="Delete" asp-route-id="@item.AppointmentId" class="btn btn-danger" style="margin-top: 2px">Cancel</a>
                 </td>
         </tr>
 }

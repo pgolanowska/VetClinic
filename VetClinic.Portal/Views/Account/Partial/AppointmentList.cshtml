@@ -1,0 +1,22 @@
+﻿@model IEnumerable<VetClinic.Data.Data.Clinic.Appointment>
+
+@foreach (var appointment in Model)
+{
+    <div class="card horizontal">
+        <div class="card-image" style="width:250px">
+            @if (@appointment.Pet.PetPicture != null)
+            {
+                var base64 = Convert.ToBase64String(@appointment.Pet.PetPicture);
+                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                <img src="@imgSrc"/>
+            }
+        </div>
+        <div class="card-stacked">
+            <div class="card-content">
+                <span class="card-title">@appointment.Pet.PetName</span>
+                <p>@appointment.Employee.EmployeeName @appointment.Employee.EmployeeSurname</p>
+                <p>@appointment.AppointmentDateTime</p>
+            </div>
+        </div>
+    </div>
+}

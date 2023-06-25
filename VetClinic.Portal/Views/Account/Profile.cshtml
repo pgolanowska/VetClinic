@@ -3,6 +3,87 @@
     Layout = "~/Views/Shared/_SimpleLayout.cshtml";
     ViewData["Title"] = "User Profile";
 }
-<p>Email: @Model.Email</p>
-<p>Name: @Model.Name</p>
-<p>Surname: @Model.Surname</p>
+<div class="row">
+    <div class="col s3" style="height:100%">
+        <ul class="sidenav sidenav-fixed"
+        style="position:inherit; margin-left:-20px; margin-bottom:-20px; margin-top:1px;
+        height:80vh; padding-bottom:60px;
+        display: flex; flex-direction: column;">
+            <li style="margin-top:10px"><a href="#mydata" class="my-data-link"><i class="material-icons">person</i> My Data</a></li>
+            <li>
+                <ul class="collapsible collapsible-accordion">
+                    <li>
+                        <a class="collapsible-header">My Pets<i class="material-icons">arrow_drop_down</i> </a>
+                        <div class="collapsible-body">
+                            <ul>
+                                @foreach (var pet in ViewBag.Pets)
+                                {
+                                    <li><a class="pet-link" href="@pet.Pet.PetId"><i class="material-icons">pets</i> @pet.Pet.PetName</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <ul class="collapsible collapsible-accordion">
+                    <li>
+                        <a class="collapsible-header">My Appointments<i class="material-icons">arrow_drop_down</i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="#past"><i class="material-icons">done</i> Past</a></li>
+                                <li><a href="#upcoming" class="upcoming-link"><i class="material-icons">schedule</i> Upcoming</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <div style="flex-grow: 1;"></div>
+            <li style="text-align:center; margin-bottom: -25px">
+                <form asp-controller="Account" asp-action="Logout" method="post">
+                    <button type="submit" class="btn-small btn-primary black-text"><b>Log out</b></button>
+                </form>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col s9" id="details-container">
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.collapsible');
+            var instances = M.Collapsible.init(elems);
+
+            var elems2 = document.querySelectorAll('.sidenav');
+            var instances2 = M.Sidenav.init(elems2);
+        });
+
+        $(document).ready(function () {
+            $("a.pet-link").click(function (event) {
+                event.preventDefault();
+                var petId = $(this).attr("href");
+                $.get("/Account/PetDetails/" + petId, function (data) {
+                    $("#details-container").html(data);
+                });
+            });
+
+            $("a.my-data-link").click(function (event) {
+                event.preventDefault();
+                $.get("/Account/UserDetails", function (data) {
+                    $("#details-container").html(data);
+                });
+            });
+
+            $("a.upcoming-link").click(function (event) {
+                event.preventDefault();
+                $("#details-container").load("/Account/GetUserAppointments");
+            });
+
+            $("a.my-data-link").trigger("click");
+        });
+
+    </script>
+}

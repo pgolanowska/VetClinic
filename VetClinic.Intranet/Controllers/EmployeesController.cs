@@ -103,8 +103,6 @@ namespace VetClinic.Intranet.Controllers
             _context.Add(employee);
             await _context.SaveChangesAsync();
 
-            Trace.WriteLine(employee.EmployeeId);
-
             foreach (var serviceGroup in SelectedServiceGroups)
             {
                 var newLink = new EmployeeServiceGroup

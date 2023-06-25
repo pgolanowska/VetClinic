@@ -25,7 +25,6 @@ namespace VetClinic.CompanionApp.BusinessLogic
 
             ToastNotificationManager.CreateToastNotifier().AddToSchedule(scheduledToast);
 
-            Trace.WriteLine(toastXml);
         }
 
     }

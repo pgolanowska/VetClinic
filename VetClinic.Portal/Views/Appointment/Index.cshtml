@@ -43,7 +43,7 @@
       </div>
       <div class="modal-footer">
         <button id="save-button" type="button" class="btn btn-primary" style="margin: 5px">Book</button>
-        <button id="save-for-later-button" type="button" class="btn btn-secondary" style="margin: 5px">Book</button>
+                <button id="save-for-later-button" type="button" class="btn btn-secondary" style="margin: 5px">Save</button>
         <button type="button" class="btn btn-secondary" style="margin: 5px" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -283,11 +283,11 @@
                         $('#appointmentModal').modal('hide');
                     }, 500);
                     changeWeek(0);
-                    alert('Appointment added to saved items!');
+                    M.toast({ html: 'Appointment added to saved items!' });
                 },
                 error: function (error) {
                     console.log('Error: ', error);
-                    alert('Unable to save appointment. Please try again later.');
+                    M.toast({ html: 'Unable to save appointment. Please try again later.'});
                 }
             });
         });

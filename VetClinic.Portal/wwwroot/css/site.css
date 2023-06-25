@@ -144,13 +144,13 @@ body {
     flex-direction: column;
     flex-basis: 100%;
     flex: 0;
-    padding-left: 10%;
+    width:80%;
 }
 .text-column {
     display: flex;
     flex-direction: column;
     flex-basis: 100%;
-    flex: 0.9;
+    flex: 2;
 }
 
 .lefthand-menu {

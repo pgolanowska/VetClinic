@@ -15,7 +15,7 @@
                                 <img src="@Url.Action("GetPhoto", "Home", new { id = item.EmployeeId })" style="width: 250px; height: 250px;" />
                             </div>
                             <div class="text-column">
-                                <h4>@item.EmployeeName @item.EmployeeSurname, @item.Title.TitleAbbrev</h4>
+                                <h4>@item.EmployeeName @item.EmployeeSurname, @item.Title.TitleAbbrev <sup><a href="@Url.Action("SaveDoctor","SavedItems", new { id = item.EmployeeId })" onclick="M.toast({html: 'Doctor saved!'})"> <i class="mdi mdi-bookmark" style="color: #16697A; font-size: 20px"></i></a></sup></h4>
                                 <br/>
                                 @item.EmployeeBio
                                 <br/>

@@ -15,6 +15,13 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<VetClinicContext>(options =>
     options.UseSqlServer(connectionString));
 
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromDays(90);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -27,12 +34,6 @@ builder.Services.AddMvc().AddViewOptions(options =>
     options.HtmlHelperOptions.ClientValidationEnabled = true;
 });
 
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromSeconds(400);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
 
 var app = builder.Build();
 

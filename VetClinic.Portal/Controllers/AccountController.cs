@@ -7,6 +7,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
 
 namespace VetClinic.Portal.Controllers
 {
@@ -53,7 +54,6 @@ namespace VetClinic.Portal.Controllers
 
                 // Create the user
                 var result = await userManager.CreateAsync(user, model.Password);
-                Trace.WriteLine(result);
 
 
                 if (result.Succeeded)
@@ -104,6 +104,16 @@ namespace VetClinic.Portal.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            ProfileViewModel CurrentUser = new ProfileViewModel();
+            HttpContext.Session.SetString("CurrentUser", JsonConvert.SerializeObject(CurrentUser));
+            return RedirectToAction("Index", "Home");
+        }
+
         private IActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
@@ -123,9 +133,63 @@ namespace VetClinic.Portal.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
+                var user = this.userManager?.GetUserAsync(User).Result;
 
-            ProfileViewModel CurrentUser = JsonConvert.DeserializeObject<ProfileViewModel>(HttpContext.Session.GetString("CurrentUser"));
+            ProfileViewModel CurrentUser = new ProfileViewModel
+            {
+                    Id = user.Id,
+                    Email = user.Email,
+                    Name = context.Client.Where(c => c.ClientId == user.ClientId).Select(c => c.ClientName).FirstOrDefault(),
+                    Surname = context.Client.Where(c => c.ClientId == user.ClientId).Select(c => c.ClientSurname).FirstOrDefault(),
+                    PhoneNumber = context.Client.Where(c => c.ClientId == user.ClientId).Select(c => c.ClientPhoneNumber).SingleOrDefault(),
+                    Address = context.Client.Where(c => c.ClientId == user.ClientId).Select(c => c.ClientAddress).SingleOrDefault(),
+                };
+
+                HttpContext.Session.SetString("CurrentUser", JsonConvert.SerializeObject(CurrentUser));
+
+            ViewBag.Pets = context.ClientPet.Include(cp => cp.Pet).Where(cp => cp.ClientId == user.ClientId).Where(cp => cp.Pet.PetIsActive).ToList();
             return View(CurrentUser);
+        }
+
+        [HttpGet]
+        public IActionResult PetDetails(int id)
+        {
+            var pet = context.Pet.Include(p => p.PetSpecies).Where(p => p.PetId == id).FirstOrDefault();
+            if (pet == null)
+            {
+                return NotFound();
+            }
+
+            return PartialView("Partial/PetDetails", pet);
+        }
+
+        [HttpGet]
+        public IActionResult UserDetails()
+        {
+            var userJson = HttpContext.Session.GetString("CurrentUser");
+            var user = JsonConvert.DeserializeObject<ProfileViewModel>(userJson);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return PartialView("Partial/UserDetails", user);
+        }
+
+        public async Task<IActionResult> GetUserAppointments()
+        {
+            var userJson = HttpContext.Session.GetString("CurrentUser");
+            var user = JsonConvert.DeserializeObject<ProfileViewModel>(userJson);
+
+            int clientId = context.ClientUser.Where(c => c.Id == user.Id).Select(c => c.ClientId).FirstOrDefault();
+            var appointments = context.Appointment
+                .Include(ap => ap.Employee)
+                .Include(ap => ap.Pet)
+                .Where(ap => ap.ClientId == clientId)
+                .Where(ap => ap.IsActive == true);
+
+            return PartialView("Partial/AppointmentList", appointments);
         }
     }
 }

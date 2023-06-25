@@ -150,7 +150,6 @@ namespace VetClinic.WebAPI.Controllers
         [Route("AddPetHistory")]
         public async Task<IActionResult> AddPetHistory([FromBody] PetHistoryResourceModel petHistory)
         {
-            Trace.WriteLine("title here: " + petHistory.PetHistoryTitle);
             var newPetHistory = new PetHistory
             {
                 PetId = petHistory.PetId,

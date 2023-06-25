@@ -35,10 +35,6 @@ namespace VetClinic.Intranet.Controllers
         {
             //if (start == null) start = new GregorianCalendar().AddDays(DateTime.Now, -((int)DateTime.Now.DayOfWeek) + 1);
             //if (end == null) end = start.AddDays(4);
-
-            Trace.WriteLine(start);
-            Trace.WriteLine(end);
-
             var schedules = _context.Employee
                             .Where(e => e.EmployeeIsActive == true)
                             .GroupJoin(
@@ -57,7 +53,7 @@ namespace VetClinic.Intranet.Controllers
                         employeeId = g.Key.EmployeeId,
                         employeeName = g.Key.EmployeeName + " " + g.Key.EmployeeSurname,
                         WeekSchedule = g.GroupBy(x => x.es == null ? -1 : ((int)x.es.ScheduleDate.DayOfWeek + 6) % 7)
-                            .Where(x => x.Key != -1) // Exclude unscheduled days from the final output
+                            .Where(x => x.Key != -1)
                             .ToDictionary(
                                 x => x.Key,
                                 x => x.Select(s => s.es == null
@@ -67,17 +63,6 @@ namespace VetClinic.Intranet.Controllers
                     })
                     .ToList();
 
-            foreach (var sched in schedules)
-            {
-
-                Trace.WriteLine(sched.employeeName);
-                foreach (var x in sched.WeekSchedule)
-                {
-                    Trace.WriteLine(x.Value.ToString());
-                }
-            }
-
-            // Return the schedules as JSON
             return Json(schedules);
         }
 
@@ -235,10 +220,6 @@ namespace VetClinic.Intranet.Controllers
         [HttpPost]
         public async Task<IActionResult> AddSchedules([FromBody] List<EmployeeSchedule> schedules)
         {
-            foreach(var schedule in schedules)
-            {
-                Trace.WriteLine(schedule);
-            }
             await _context.EmployeeSchedule.AddRangeAsync(schedules);
             await _context.SaveChangesAsync();
 

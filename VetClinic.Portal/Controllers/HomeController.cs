@@ -39,10 +39,12 @@ namespace VetClinic.Portal.Controllers
             {
                 ProfileViewModel CurrentUser = new ProfileViewModel
                 {
+                    Id = user.Id,
                     Email = user.Email,
                     Name = context.Client.Where(c => c.ClientId == user.ClientId).Select(c => c.ClientName).FirstOrDefault(),
                     Surname = context.Client.Where(c => c.ClientId == user.ClientId).Select(c => c.ClientSurname).FirstOrDefault(),
-                    //PhoneNumber = context.Client.Where(c => c.ClientId == user.ClientId).Select(c => c.ClientPhoneNumber).SingleOrDefault(),
+                    PhoneNumber = context.Client.Where(c => c.ClientId == user.ClientId).Select(c => c.ClientPhoneNumber).SingleOrDefault(),
+                    Address = context.Client.Where(c => c.ClientId == user.ClientId).Select(c => c.ClientAddress).SingleOrDefault(),
                 };
 
                 HttpContext.Session.SetString("CurrentUser", JsonConvert.SerializeObject(CurrentUser));
@@ -56,13 +58,10 @@ namespace VetClinic.Portal.Controllers
                                  where infoPage.IsActive == true
                                  orderby infoPage.InfoPageId
                                  select infoPage).ToList();
-            // Set the folder where your images are stored
+
             string folderPath = "../VetClinic.Portal/wwwroot/gallery";
 
-            // Get the list of image file paths
             List<string> imageFiles = Directory.GetFiles(folderPath).ToList();
-
-            // Convert the absolute paths to relative paths
             List<string> relativeImagePaths = imageFiles.Select(file => "/gallery/" + Path.GetFileName(file)).ToList();
             ViewData["ImagePaths"] = relativeImagePaths;
 
